@@ -1,0 +1,1594 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+<title>洛克远行商人</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --gold: #f0c040; --gold-dark: #c8960a; --bg-dark: #1a1a2e;
+  --bg-card: #222244; --bg-card2: #2a2a55; --text: #f0e6d3;
+  --text-dim: #a09080; --green: #4caf50; --red: #ef5350;
+  --blue: #42a5f5; --orange: #ffa726; --pink: #e040fb; --cyan: #00e5ff;
+}
+body { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; background: var(--bg-dark); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+.header { background: linear-gradient(135deg, #1a1a3e 0%, #2a1a4e 100%); padding: 14px 20px 10px; text-align: center; border-bottom: 2px solid var(--gold-dark); position: sticky; top: 0; z-index: 100; }
+.header h1 { font-size: 20px; color: var(--gold); letter-spacing: 2px; }
+.header .subtitle { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
+.nav-tabs { display: flex; background: rgba(0,0,0,0.3); overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.nav-tab { flex-shrink: 0; padding: 10px 10px; text-align: center; font-size: 12px; font-weight: 600; color: var(--text-dim); cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.2s; white-space: nowrap; -webkit-tap-highlight-color: transparent; }
+.nav-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+.page { display: none; }
+.page.active { display: block; }
+
+/* Common */
+.status-bar { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 20px; font-size: 13px; background: rgba(0,0,0,0.3); }
+.status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+.status-dot.closed { background: var(--red); animation: none; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+.countdown-section { padding: 16px 20px; text-align: center; }
+.countdown-label { font-size: 13px; color: var(--text-dim); margin-bottom: 6px; }
+.countdown-timer { font-size: 36px; font-weight: bold; color: var(--gold); letter-spacing: 2px; }
+.countdown-timer.closed { font-size: 18px; color: var(--text-dim); }
+.next-refresh { font-size: 12px; color: var(--text-dim); margin-top: 6px; }
+.round-tabs { display: flex; gap: 8px; padding: 0 20px 12px; overflow-x: auto; }
+.round-tab { flex-shrink: 0; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 2px solid transparent; background: var(--bg-card); color: var(--text-dim); cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+.round-tab.active { border-color: var(--gold); color: var(--gold); background: var(--bg-card2); }
+.round-tab .tab-time { font-size: 11px; opacity: 0.7; }
+.items-section { padding: 0 16px 100px; }
+.round-title { font-size: 15px; color: var(--gold); margin: 16px 4px 10px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.round-title .time { font-size: 12px; color: var(--text-dim); font-weight: normal; }
+.item-card { background: var(--bg-card); border-radius: 12px; padding: 12px; margin-bottom: 10px; display: flex; gap: 12px; align-items: center; border: 1px solid rgba(240,192,64,0.1); }
+.item-img { width: 56px; height: 56px; border-radius: 8px; background: var(--bg-card2); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 28px; overflow: hidden; }
+.item-img img { width: 100%; height: 100%; object-fit: contain; }
+.item-info { flex: 1; min-width: 0; }
+.item-name { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.item-category { font-size: 11px; color: var(--text-dim); margin-bottom: 6px; }
+.item-meta { display: flex; gap: 12px; flex-wrap: wrap; }
+.item-meta span { font-size: 12px; padding: 2px 8px; border-radius: 4px; background: var(--bg-card2); }
+.meta-price { color: var(--gold) !important; }
+.meta-limit { color: var(--orange) !important; }
+.meta-api-src { color: var(--cyan) !important; font-size: 10px !important; }
+.no-items { text-align: center; padding: 40px 20px; color: var(--text-dim); font-size: 14px; }
+.refresh-fab { position: fixed; bottom: 24px; right: 24px; width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); border: none; color: #1a1a2e; font-size: 24px; cursor: pointer; box-shadow: 0 4px 16px rgba(240,192,64,0.4); display: flex; align-items: center; justify-content: center; z-index: 200; transition: transform 0.2s; }
+.refresh-fab:active { transform: scale(0.9); }
+.refresh-fab.spinning svg { animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading { text-align: center; padding: 60px 20px; color: var(--text-dim); }
+.loading-spinner { width: 32px; height: 32px; border: 3px solid var(--bg-card2); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
+.closed-overlay { text-align: center; padding: 40px 20px; }
+.closed-icon { font-size: 48px; margin-bottom: 12px; }
+.closed-text { font-size: 16px; color: var(--text-dim); line-height: 1.6; }
+
+/* EGG */
+.egg-search-box { padding: 20px 20px 16px; }
+.egg-search-box .hint { font-size: 13px; color: var(--text-dim); margin-bottom: 16px; text-align: center; line-height: 1.5; }
+.egg-input-group { display: flex; gap: 12px; margin-bottom: 12px; }
+.egg-input-wrap { flex: 1; position: relative; }
+.egg-input-wrap label { display: block; font-size: 12px; color: var(--text-dim); margin-bottom: 6px; font-weight: 600; }
+.egg-input-wrap input { width: 100%; padding: 12px 14px; border-radius: 10px; border: 2px solid rgba(240,192,64,0.2); background: var(--bg-card); color: var(--text); font-size: 18px; font-weight: 600; font-family: inherit; outline: none; -webkit-appearance: none; }
+.egg-input-wrap input:focus { border-color: var(--gold); }
+.egg-input-wrap .unit { position: absolute; right: 14px; bottom: 14px; font-size: 12px; color: var(--text-dim); }
+.btn-primary { width: 100%; padding: 14px; border-radius: 12px; border: none; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: #1a1a2e; font-size: 16px; font-weight: 700; cursor: pointer; font-family: inherit; }
+.btn-primary:active { transform: scale(0.97); }
+.btn-sm { width: auto !important; padding: 8px 16px !important; font-size: 12px !important; margin-top: 8px; background: linear-gradient(135deg, #42a5f5, #1e88e5) !important; color: #fff !important; }
+.egg-quick-select { padding: 0 20px 8px; display: flex; flex-wrap: wrap; gap: 8px; }
+.egg-chip { padding: 6px 14px; border-radius: 16px; background: var(--bg-card); color: var(--text-dim); font-size: 12px; cursor: pointer; border: 1px solid rgba(240,192,64,0.15); white-space: nowrap; -webkit-tap-highlight-color: transparent; }
+.egg-chip:active { background: var(--bg-card2); color: var(--gold); border-color: var(--gold); }
+.egg-chip.test-chip { border-color: rgba(66,165,245,0.3); color: var(--blue); }
+.egg-results { padding: 0 16px 100px; }
+.egg-result-header { font-size: 14px; color: var(--text-dim); margin-bottom: 12px; padding-left: 4px; }
+.egg-result-header strong { color: var(--gold); }
+.egg-test-blocks { display: grid; grid-template-columns: repeat(2,1fr); gap: 8px; padding: 0 20px 12px; }
+.egg-test-block { background: var(--bg-card); border-radius: 10px; padding: 10px 12px; cursor: pointer; border: 1px solid rgba(66,165,245,0.15); transition: all 0.15s; -webkit-tap-highlight-color: transparent; }
+.egg-test-block:active { border-color: var(--blue); background: var(--bg-card2); }
+.egg-test-block .tb-name { font-size: 13px; font-weight: 600; color: var(--text); }
+.egg-test-block .tb-data { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+.egg-test-block .tb-expect { font-size: 10px; color: var(--orange); margin-top: 2px; }
+.egg-result-card { background: var(--bg-card); border-radius: 12px; padding: 14px; margin-bottom: 10px; border: 1px solid rgba(240,192,64,0.1); }
+.egg-result-card.best-match { border-color: rgba(240,192,64,0.4); box-shadow: 0 0 20px rgba(240,192,64,0.08); }
+.egg-result-top { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.egg-result-icon { width: 48px; height: 48px; border-radius: 50%; background: var(--bg-card2); display: flex; align-items: center; justify-content: center; font-size: 26px; flex-shrink: 0; overflow: hidden; }
+.egg-result-icon img { width: 100%; height: 100%; object-fit: contain; }
+.egg-result-info { flex: 1; min-width: 0; }
+.egg-result-name { font-size: 16px; font-weight: 700; color: var(--text); }
+.egg-result-attr { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+.egg-match-bar-wrap { height: 6px; background: var(--bg-card2); border-radius: 3px; overflow: hidden; margin-top: 8px; }
+.egg-match-bar { height: 100%; border-radius: 3px; }
+.egg-match-percent { font-size: 13px; font-weight: 700; text-align: right; margin-top: 2px; }
+.egg-match-detail { font-size: 11px; color: var(--text-dim); margin-top: 4px; line-height: 1.5; }
+.egg-no-result { text-align: center; padding: 40px 20px; color: var(--text-dim); }
+.egg-no-result .icon { font-size: 48px; margin-bottom: 12px; }
+.egg-test-verdict { border-radius: 8px; padding: 10px 14px; margin-bottom: 12px; font-size: 13px; }
+.egg-test-verdict.pass { background: rgba(76,175,80,0.15); color: var(--green); border: 1px solid rgba(76,175,80,0.3); }
+.egg-test-verdict.fail { background: rgba(239,83,80,0.15); color: var(--red); border: 1px solid rgba(239,83,80,0.3); }
+
+/* POKEDEX */
+.pokedex-search { padding: 16px 16px 8px; }
+.pokedex-search input { width: 100%; padding: 12px 16px; border-radius: 24px; border: 2px solid rgba(240,192,64,0.2); background: var(--bg-card); color: var(--text); font-size: 15px; font-family: inherit; outline: none; -webkit-appearance: none; }
+.pokedex-search input:focus { border-color: var(--gold); }
+.pokedex-filters { padding: 8px 16px; display: flex; flex-wrap: wrap; gap: 6px; }
+.filter-chip { padding: 5px 12px; border-radius: 14px; font-size: 12px; background: var(--bg-card); color: var(--text-dim); cursor: pointer; border: 1px solid rgba(240,192,64,0.1); -webkit-tap-highlight-color: transparent; }
+.filter-chip.active { background: var(--bg-card2); color: var(--gold); border-color: var(--gold); }
+.pokedex-grid { padding: 0 12px 100px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.pokedex-card { background: var(--bg-card); border-radius: 12px; padding: 10px; text-align: center; border: 1px solid rgba(240,192,64,0.08); cursor: pointer; transition: border-color 0.15s; -webkit-tap-highlight-color: transparent; }
+.pokedex-card:active { border-color: var(--gold-dark); }
+.pokedex-card .pk-img { width: 60px; height: 60px; margin: 0 auto 6px; border-radius: 8px; background: var(--bg-card2); display: flex; align-items: center; justify-content: center; font-size: 30px; overflow: hidden; }
+.pokedex-card .pk-img img { width: 100%; height: 100%; object-fit: contain; }
+.pokedex-card .pk-num { font-size: 10px; color: var(--text-dim); }
+.pokedex-card .pk-name { font-size: 13px; font-weight: 600; color: var(--text); margin-top: 2px; }
+.pokedex-card .pk-attr { font-size: 10px; color: var(--text-dim); margin-top: 1px; }
+.pokedex-detail-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); z-index: 300; align-items: center; justify-content: center; }
+.pokedex-detail-overlay.show { display: flex; }
+.pokedex-detail-card { background: var(--bg-card); border-radius: 16px; padding: 20px; width: 90%; max-width: 360px; max-height: 80vh; overflow-y: auto; text-align: center; border: 2px solid var(--gold-dark); }
+.pokedex-detail-card .detail-img { width: 120px; height: 120px; margin: 0 auto 12px; border-radius: 12px; background: var(--bg-card2); display: flex; align-items: center; justify-content: center; font-size: 60px; overflow: hidden; }
+.pokedex-detail-card .detail-img img { width: 100%; height: 100%; object-fit: contain; }
+.pokedex-detail-card .detail-name { font-size: 22px; font-weight: 700; color: var(--gold); margin-bottom: 4px; }
+.pokedex-detail-card .detail-num { font-size: 13px; color: var(--text-dim); margin-bottom: 8px; }
+.pokedex-detail-card .detail-attr { display: inline-block; padding: 4px 14px; border-radius: 12px; font-size: 13px; font-weight: 600; margin-bottom: 12px; }
+.pokedex-detail-card .detail-info { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+.pokedex-detail-card .detail-close { margin-top: 16px; padding: 10px 30px; border-radius: 20px; background: var(--bg-card2); color: var(--text); border: none; font-size: 14px; cursor: pointer; font-family: inherit; }
+.pokedex-count { padding: 4px 16px; font-size: 12px; color: var(--text-dim); text-align: center; }
+
+/* SHINY — Custom Tracker */
+.shiny-section { padding: 16px 16px 120px; }
+.shiny-intro { background: var(--bg-card); border-radius: 12px; padding: 14px; margin-bottom: 16px; font-size: 13px; line-height: 1.6; color: var(--text-dim); }
+.shiny-intro strong { color: var(--gold); }
+.shiny-top-bar { display: flex; gap: 10px; margin-bottom: 16px; position: relative; }
+.shiny-top-bar input { flex: 1; padding: 12px 16px; border-radius: 24px; border: 2px solid rgba(240,192,64,0.2); background: var(--bg-card); color: var(--text); font-size: 15px; font-family: inherit; outline: none; -webkit-appearance: none; }
+.shiny-top-bar input:focus { border-color: var(--gold); }
+.shiny-dropdown-wrap { display: none; position: absolute; left: 0; right: 0; top: 50px; background: var(--bg-card2); border: 2px solid var(--gold-dark); border-radius: 12px; max-height: 280px; overflow-y: auto; z-index: 50; }
+.shiny-dropdown-wrap.show { display: block; }
+.shiny-dropdown-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; cursor: pointer; border-bottom: 1px solid rgba(240,192,64,0.08); -webkit-tap-highlight-color: transparent; }
+.shiny-dropdown-item:active { background: rgba(240,192,64,0.1); }
+.shiny-dropdown-item .dd-img { width: 40px; height: 40px; border-radius: 50%; background: var(--bg-card); display: flex; align-items: center; justify-content: center; font-size: 22px; overflow: hidden; flex-shrink: 0; }
+.shiny-dropdown-item .dd-img img { width: 100%; height: 100%; object-fit: contain; }
+.shiny-dropdown-item .dd-name { font-size: 14px; font-weight: 600; color: var(--text); flex: 1; }
+.shiny-dropdown-item .dd-attr { font-size: 11px; color: var(--text-dim); }
+.shiny-catch-section { text-align: center; margin: 16px 0; }
+.btn-shiny-catch { display: inline-block; padding: 16px 36px; border-radius: 28px; border: none; font-size: 18px; font-weight: 700; cursor: pointer; font-family: inherit; margin: 4px; -webkit-tap-highlight-color: transparent; transition: transform 0.15s; }
+.btn-shiny-catch:active { transform: scale(0.95); }
+.btn-shiny-catch.normal { background: linear-gradient(135deg, #43a047, #2e7d32); color: #fff; }
+.btn-shiny-catch.shiny { background: linear-gradient(135deg, #fdd835, #f9a825); color: #1a1a2e; animation: shimmer 2s infinite; }
+@keyframes shimmer { 0%,100%{box-shadow: 0 0 8px rgba(253,216,53,0.4)} 50%{box-shadow: 0 0 24px rgba(253,216,53,0.8)} }
+.shiny-pet-card { background: var(--bg-card); border-radius: 12px; padding: 14px; margin-bottom: 10px; border: 1px solid rgba(240,192,64,0.1); }
+.shiny-pet-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.shiny-pet-header .pet-img { width: 44px; height: 44px; border-radius: 50%; background: var(--bg-card2); display: flex; align-items: center; justify-content: center; font-size: 24px; overflow: hidden; flex-shrink: 0; }
+.shiny-pet-header .pet-img img { width: 100%; height: 100%; object-fit: contain; }
+.shiny-pet-header .pet-info { flex: 1; min-width: 0; }
+.shiny-pet-header .pet-name { font-size: 15px; font-weight: 700; color: var(--text); }
+.shiny-pet-header .pet-sub { font-size: 11px; color: var(--text-dim); margin-top: 1px; }
+.shiny-pet-header .pet-count { font-size: 24px; font-weight: 700; color: var(--gold); flex-shrink: 0; text-align: right; min-width: 40px; }
+.shiny-pet-bar-wrap { height: 8px; background: var(--bg-card2); border-radius: 4px; overflow: hidden; margin-bottom: 8px; }
+.shiny-pet-bar { height: 100%; border-radius: 4px; background: var(--gold); transition: width 0.3s; }
+.shiny-pet-actions { display: flex; gap: 8px; }
+.pet-btn { flex: 1; padding: 8px; border-radius: 8px; border: none; font-size: 12px; font-weight: 700; cursor: pointer; font-family: inherit; }
+.pet-btn.catch-normal { background: rgba(76,175,80,0.3); color: var(--green); }
+.pet-btn.catch-shiny { background: linear-gradient(135deg, #fdd835, #f9a825); color: #1a1a2e; }
+.pet-btn.reset { background: rgba(255,167,38,0.2); color: var(--orange); flex: 0.5; }
+.pet-btn.delete { background: rgba(239,83,80,0.2); color: var(--red); flex: 0.5; }
+.shiny-pet-log { font-size: 11px; color: var(--orange); margin-top: 8px; padding: 6px 10px; background: rgba(255,167,38,0.1); border-radius: 6px; }
+.shiny-section-title { font-size: 14px; font-weight: 700; color: var(--gold); margin: 16px 0 10px; }
+.shiny-empty { text-align: center; padding: 40px 20px; color: var(--text-dim); font-size: 14px; line-height: 1.6; }
+.shiny-history-item { display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid rgba(240,192,64,0.06); font-size: 12px; }
+.shiny-history-item .hist-icon { font-size: 16px; }
+.shiny-history-item .hist-name { color: var(--gold); font-weight: 600; flex: 1; }
+.shiny-history-item .hist-date { color: var(--text-dim); }
+.shiny-history-item .hist-at { color: var(--text-dim); font-size: 11px; }
+
+/* SHINY CATALOG — Season accordion */
+.shiny-catalog { margin-bottom: 10px; }
+.season-section { background: var(--bg-card); border-radius: 12px; margin-bottom: 10px; overflow: hidden; border: 1px solid rgba(240,192,64,0.1); }
+.season-header { display: flex; align-items: center; gap: 10px; padding: 12px 16px; cursor: pointer; -webkit-tap-highlight-color: transparent; user-select: none; }
+.season-header .season-icon { font-size: 22px; flex-shrink: 0; }
+.season-header .season-info { flex: 1; min-width: 0; }
+.season-header .season-title { font-size: 14px; font-weight: 700; color: var(--gold); }
+.season-header .season-sub { font-size: 11px; color: var(--text-dim); }
+.season-header .season-arrow { font-size: 14px; color: var(--text-dim); transition: transform 0.3s; flex-shrink: 0; }
+.season-header.open .season-arrow { transform: rotate(180deg); }
+.season-body { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+.season-body.open { max-height: 2000px; }
+.shiny-catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; padding: 0 12px 12px; }
+.shiny-catalog-item { background: var(--bg-card2); border-radius: 10px; padding: 10px 8px; display: flex; flex-direction: column; align-items: center; gap: 4px; border: 1px solid rgba(240,192,64,0.06); position: relative; }
+.shiny-catalog-item.tracking { border-color: var(--gold); border-width: 2px; }
+.shiny-catalog-item .ci-img { width: 44px; height: 44px; border-radius: 50%; background: var(--bg-card); display: flex; align-items: center; justify-content: center; font-size: 24px; overflow: hidden; }
+.shiny-catalog-item .ci-img img { width: 100%; height: 100%; object-fit: contain; }
+.shiny-catalog-item .ci-name { font-size: 12px; font-weight: 600; color: var(--text); text-align: center; line-height: 1.2; }
+.shiny-catalog-item .ci-num { font-size: 10px; color: var(--text-dim); }
+.shiny-catalog-item .ci-btn { width: 100%; padding: 5px 0; border-radius: 6px; border: none; font-size: 11px; font-weight: 700; cursor: pointer; font-family: inherit; -webkit-tap-highlight-color: transparent; text-align: center; }
+.shiny-catalog-item .ci-btn.add { background: rgba(76,175,80,0.25); color: var(--green); }
+.shiny-catalog-item .ci-btn.tracked { background: rgba(240,192,64,0.2); color: var(--gold); }
+.shiny-catalog-item .ci-badge { position: absolute; top: 4px; right: 4px; font-size: 9px; background: var(--gold); color: #1a1a2e; border-radius: 5px; padding: 1px 5px; font-weight: 700; }
+.shiny-catalog-item .ci-evo { font-size: 9px; color: var(--text-dim); text-align: center; line-height: 1.3; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Evolution chain in tracked pet card */
+.pet-evo-chain { display: flex; align-items: center; justify-content: center; gap: 4px; padding: 8px 0; margin-bottom: 8px; flex-wrap: wrap; }
+.evo-step { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.evo-img { width: 36px; height: 36px; border-radius: 50%; background: var(--bg-card2); display: flex; align-items: center; justify-content: center; font-size: 16px; overflow: hidden; border: 2px solid var(--gold-dark); }
+.evo-img img { width: 100%; height: 100%; object-fit: contain; }
+
+/* Placeholder for sprites without Wiki images (replaces emoji) */
+.sprite-placeholder {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 700; color: #fff;
+  border-radius: 50%; text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  letter-spacing: -1px;
+}
+.evo-name { font-size: 10px; color: var(--gold); font-weight: 600; }
+.evo-num { font-size: 9px; color: var(--text-dim); }
+.evo-arrow { font-size: 16px; color: var(--gold); margin: 0 2px; flex-shrink: 0; }
+
+/* EVENTS */
+.events-section { padding: 16px 16px 100px; }
+.event-card { background: var(--bg-card); border-radius: 12px; padding: 16px; margin-bottom: 12px; border: 1px solid rgba(240,192,64,0.1); }
+.event-card .event-title { font-size: 16px; font-weight: 700; color: var(--gold); margin-bottom: 6px; }
+.event-card .event-date { font-size: 12px; color: var(--orange); margin-bottom: 8px; }
+.event-card .event-desc { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+.event-card .event-tag { display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 11px; background: var(--bg-card2); margin: 4px 4px 0 0; }
+.event-card .event-tag.active-tag { background: rgba(76,175,80,0.3); color: var(--green); }
+.event-card .event-tag.new-tag { background: rgba(224,64,251,0.3); color: var(--pink); }
+
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(240,192,64,0.3); border-radius: 2px; }
+.toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); background: var(--bg-card2); color: var(--gold); padding: 10px 24px; border-radius: 20px; font-size: 14px; z-index: 400; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+.toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🏰 洛克王国世界</h1>
+  <div class="subtitle" id="headerSubtitle">远行商人 · 实时商品</div>
+</div>
+
+<div class="nav-tabs" id="navTabs">
+  <div class="nav-tab active" data-page="merchant">🏪 商人</div>
+  <div class="nav-tab" data-page="egg">🥚 蛋查询</div>
+  <div class="nav-tab" data-page="pokedex">📖 图鉴</div>
+  <div class="nav-tab" data-page="shiny">✨ 异色</div>
+  <div class="nav-tab" data-page="events">📢 活动</div>
+</div>
+
+<!-- MERCHANT PAGE -->
+<div class="page active" id="merchantPage">
+  <div class="status-bar" id="statusBar">
+    <div class="status-dot" id="statusDot"></div>
+    <span id="statusText">连接中...</span>
+    <span style="margin-left:auto;font-size:11px;color:var(--text-dim)" id="updateTime"></span>
+  </div>
+  <div class="countdown-section" id="countdownSection">
+    <div class="countdown-label" id="countdownLabel">距下次刷新</div>
+    <div class="countdown-timer" id="countdownTimer">--:--:--</div>
+    <div class="next-refresh" id="nextRefresh"></div>
+  </div>
+  <div class="round-tabs" id="roundTabs"></div>
+  <div class="items-section" id="itemsSection">
+    <div class="loading"><div class="loading-spinner"></div>正在获取远行商人数据...</div>
+  </div>
+</div>
+
+<!-- EGG PAGE -->
+<div class="page" id="eggPage">
+  <div class="egg-search-box">
+    <div class="hint">输入精灵蛋的<strong>尺寸</strong>和<strong>体重</strong>，查询可能孵出的精灵<br><small style="color:var(--cyan)">💡 数据来自玩家实测验证</small></div>
+    <div class="egg-input-group">
+      <div class="egg-input-wrap"><label>📏 尺寸（米）</label><input type="number" id="eggSize" placeholder="0.28" step="0.01" min="0" inputmode="decimal"><span class="unit">m</span></div>
+      <div class="egg-input-wrap"><label>⚖️ 体重（kg）</label><input type="number" id="eggWeight" placeholder="2.36" step="0.01" min="0" inputmode="decimal"><span class="unit">kg</span></div>
+    </div>
+    <button class="btn-primary" onclick="queryEgg()">🔍 查询精灵</button>
+    <div style="text-align:center;margin-top:8px">
+      <button class="btn-primary btn-sm" onclick="runEggTests()">🧪 用实测数据验证准确性</button>
+    </div>
+  </div>
+  <div class="egg-test-blocks" id="eggTestBlocks"></div>
+  <div class="egg-quick-select" id="eggQuickSelect"></div>
+  <div class="egg-results" id="eggResults">
+    <div class="egg-no-result"><div class="icon">🥚</div><div class="msg">输入精灵蛋的尺寸和体重<br>或点击"验证准确性"测试数据</div></div>
+  </div>
+</div>
+
+<!-- POKEDEX PAGE -->
+<div class="page" id="pokedexPage">
+  <div class="pokedex-search"><input type="text" id="pokedexSearch" placeholder="🔍 搜索精灵名称或编号..." oninput="renderPokedex()"></div>
+  <div class="pokedex-filters" id="pokedexFilters"></div>
+  <div class="pokedex-count" id="pokedexCount"></div>
+  <div class="pokedex-grid" id="pokedexGrid"></div>
+  <div class="pokedex-detail-overlay" id="pokedexDetail" onclick="if(event.target===this)closePokedexDetail()">
+    <div class="pokedex-detail-card" id="pokedexDetailCard"></div>
+  </div>
+</div>
+
+<!-- SHINY PAGE — Season Catalog + Tracker -->
+<div class="page" id="shinyPage">
+  <div class="shiny-section">
+    <div class="shiny-intro">
+      <strong>✨ 异色追踪计算器</strong><br>
+      按赛季浏览异色精灵，选择目标开始追踪记录<br>
+      <small style="color:var(--cyan)">📡 数据保存在本地，卸载App也不丢失</small>
+    </div>
+    <div class="shiny-top-bar">
+      <input type="text" id="shinySearch" placeholder="🔍 快速搜索精灵名称..." oninput="renderShinyDropdown()" onfocus="renderShinyDropdown()">
+      <div class="shiny-dropdown-wrap" id="shinyDropdown"></div>
+    </div>
+    <!-- Season Catalog Accordion -->
+    <div class="shiny-catalog" id="shinyCatalog"></div>
+    <!-- Currently Tracking -->
+    <div class="shiny-section-title">🎯 正在追踪</div>
+    <div id="shinyPets"><div class="shiny-empty">还没有添加任何精灵<br>👆 搜索或点击下方精灵来添加</div></div>
+    <div class="shiny-section-title">🏆 异色出货记录</div>
+    <div id="shinyHistory" style="font-size:12px;color:var(--text-dim);line-height:1.6"></div>
+    <div style="text-align:center;margin-top:16px">
+      <button class="btn-sm" style="background:rgba(239,83,80,0.2)!important;color:var(--red)!important" onclick="resetAllShiny()">🗑️ 重置所有数据</button>
+    </div>
+  </div>
+</div>
+
+<!-- EVENTS PAGE -->
+<div class="page" id="eventsPage">
+  <div class="events-section" id="eventsContent"></div>
+</div>
+
+<button class="refresh-fab" id="refreshFab" title="刷新商人数据">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline>
+    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+  </svg>
+</button>
+<div class="toast" id="toast"></div>
+
+<script>
+// ===========================================================
+// SPRITE IMAGE MAP — from Bilibili Wiki (204 icons)
+// ===========================================================
+var SPRITE_IMG = {
+  "迪莫":"https://patchwiki.biligame.com/images/rocom/2/25/o64cvcxq1l6tlur77xjqbwx2s4imabd.png",
+  "喵喵":"https://patchwiki.biligame.com/images/rocom/3/34/swx8tx6o3mpyfnqrkxu1kth6sgzott2.png",
+  "喵呜":"https://patchwiki.biligame.com/images/rocom/8/8d/dfnsd50cr86p61a37sanzt5jp3i022u.png",
+  "魔力猫":"https://patchwiki.biligame.com/images/rocom/3/33/p4l4i0xh8rzj0mosp9sgw4qjfvlbl0r.png",
+  "火花":"https://patchwiki.biligame.com/images/rocom/a/a1/jzel7fdbrw66zvccwcx4ekg72d66m21.png",
+  "焰火":"https://patchwiki.biligame.com/images/rocom/b/b9/r8j0510jtxabhlyl5srx22orefxhh5g.png",
+  "火神":"https://patchwiki.biligame.com/images/rocom/4/4f/627a47xjvghn9okifk66vhsx4uv7101.png",
+  "水蓝蓝":"https://patchwiki.biligame.com/images/rocom/0/0b/km91vn87f93y9ukj6ir6wsc4dl8shx1.png",
+  "波波拉":"https://patchwiki.biligame.com/images/rocom/c/c2/63ym3z73l9k65ws69a63g8f0itajsu4.png",
+  "水灵":"https://patchwiki.biligame.com/images/rocom/5/50/33by7ml0nsrsxxq1l8l2uj4izqnuwpd.png",
+  "鸭吉吉":"https://patchwiki.biligame.com/images/rocom/9/9b/lsgonow9dtf4nlte0094yq43stn0nrv.png",
+  "板板壳":"https://patchwiki.biligame.com/images/rocom/0/05/7yi5qyeejez9yyyhya70f2fkvtwlrp2.png",
+  "咔咔壳":"https://patchwiki.biligame.com/images/rocom/7/70/n9aqhwtf7asg5d60p6rzsxwuupsdtba.png",
+  "水泡壳":"https://patchwiki.biligame.com/images/rocom/d/d0/0fhxxfotj2zivjel031i1w9v6ys3ts4.png",
+  "锥尾羊":"https://patchwiki.biligame.com/images/rocom/0/0b/c9kn29sskgdppe1ipgd7ooyioj90dyt.png",
+  "铃兰羊":"https://patchwiki.biligame.com/images/rocom/a/af/pbgcws3qiaqvryk28q9cmer116jy71d.png",
+  "花影羚羊":"https://patchwiki.biligame.com/images/rocom/b/b5/kyhqvze7bxy684o6pql6pkank91011k.png",
+  "雪绒鸟":"https://patchwiki.biligame.com/images/rocom/1/1c/1fd8czi6rfr8nf738hbqozt6bozum44.png",
+  "冬羽雀":"https://patchwiki.biligame.com/images/rocom/3/35/jmw35rn0cvpfhfqzbrqohexipzm8xg1.png",
+  "岚鸟":"https://patchwiki.biligame.com/images/rocom/7/7f/ac3t55pytqhv4x8c9z9w7w6k00glr8p.png",
+  "小灵菇":"https://patchwiki.biligame.com/images/rocom/b/b8/ltybffbpudghq5tx60h70gy1vdj5xpa.png",
+  "幻灵菇":"https://patchwiki.biligame.com/images/rocom/8/8b/3xoutgdtyr7y19dtslj9ijfxv20wb69.png",
+  "幻影灵菇":"https://patchwiki.biligame.com/images/rocom/0/0f/915lidbxavc7iprutynlt2z380lxb7x.png",
+  "石肤蜥":"https://patchwiki.biligame.com/images/rocom/8/8e/gfeccz7923wkt2g0k4zn9isjx7g52r3.png",
+  "石刺蜥":"https://patchwiki.biligame.com/images/rocom/d/d1/dt0gk8z1gtu051gl10yoxdelrkk5aib.png",
+  "石冠王蜥":"https://patchwiki.biligame.com/images/rocom/0/00/dlzc7ctb4qlsc5pbonhpcu7kky4x3uz.png",
+  "布是石":"https://patchwiki.biligame.com/images/rocom/8/89/n2olozya089rge7wuokp3nazl44xqst.png",
+  "布是岩":"https://patchwiki.biligame.com/images/rocom/f/f7/k35p74v6zheql64uqzmjj76g1yalg5e.png",
+  "布克棱岩":"https://patchwiki.biligame.com/images/rocom/5/54/108j9nm783krd2nenbkyvvgy2xkgoso.png",
+  "恶魔叮":"https://patchwiki.biligame.com/images/rocom/1/1e/dup0zejk454blppyqq2c2q7mnym6s4s.png",
+  "叮叮恶魔":"https://patchwiki.biligame.com/images/rocom/0/0b/o9iqtz0rdzb2rkqkewx4v29qya3rknq.png",
+  "毛毛":"https://patchwiki.biligame.com/images/rocom/a/af/owgmiaowlsk52x3cjatoiowp9hq4d4u.png",
+  "爬爬":"https://patchwiki.biligame.com/images/rocom/e/ea/524nzn85da28i54swvfzqbucowmlvu0.png",
+  "化蝶":"https://patchwiki.biligame.com/images/rocom/3/3b/s9jxu0z2vcq9ywb7wkgoyyyivr8hvsd.png",
+  "幽影树":"https://patchwiki.biligame.com/images/rocom/4/42/h8x8d49z7tbq02dibjv2lgnvk344pb7.png",
+  "小鼠獭":"https://patchwiki.biligame.com/images/rocom/7/71/mhtudimorxc3o9un25icovvi9lahiza.png",
+  "燕尾獭":"https://patchwiki.biligame.com/images/rocom/e/ed/4k5p223a49bec7iscjj7m5ouqdxrufa.png",
+  "卷胡巨獭":"https://patchwiki.biligame.com/images/rocom/4/4d/h1d1rubaklvrkodj1fr4j8jyiaqho8z.png",
+  "矿晶虫":"https://patchwiki.biligame.com/images/rocom/4/4b/rakgahc3c1vonzb7l1oypg0kwmhpi3z.png",
+  "晶石蜗":"https://patchwiki.biligame.com/images/rocom/a/a1/bllriabi2ywqr0cnc2au8wyehtcd21y.png",
+  "奇丽草":"https://patchwiki.biligame.com/images/rocom/1/1f/kv2w95rommythz2es62viqib0edez2m.png",
+  "奇丽叶":"https://patchwiki.biligame.com/images/rocom/8/89/qe7mpeopll2by3im70dsqtesufqq62z.png",
+  "奇丽花":"https://patchwiki.biligame.com/images/rocom/8/8c/dbgfehb9vsrkwnn1jkxtibxciapkdur.png",
+  "丢丢":"https://patchwiki.biligame.com/images/rocom/6/69/ncos20b0z39xr0ir1185rzav8cxd9vz.png",
+  "卡卡虫":"https://patchwiki.biligame.com/images/rocom/d/d7/bi5t0j12hzaiw6f43kjijgblr8les6s.png",
+  "卡瓦重":"https://patchwiki.biligame.com/images/rocom/9/95/ofh2y3cjn996jnxvajei3j5m1jole74.png",
+  "护主犬":"https://patchwiki.biligame.com/images/rocom/6/64/t29c2r5ooabyzne8dt5uu9bzq10ibtz.png",
+  "音速犬":"https://patchwiki.biligame.com/images/rocom/4/4e/8rkwz0k7qvejlxs78isa65ajn16o1qk.png",
+  "绿耳松鼠":"https://patchwiki.biligame.com/images/rocom/b/b5/2foanarop7ik9wf1aqo37m7rdr3ug39.png",
+  "抱枕松鼠":"https://patchwiki.biligame.com/images/rocom/3/3f/d7igqblvpoaio9o1ozoa2slcmskbzue.png",
+  "蹦床松鼠":"https://patchwiki.biligame.com/images/rocom/5/5e/6lkej27f60uxygncdnl4oktj79t9da2.png",
+  "嘟嘟煲":"https://patchwiki.biligame.com/images/rocom/4/44/8gr1vgk1hjf59enrdxyhboe35g8rijd.png",
+  "嘟嘟锅":"https://patchwiki.biligame.com/images/rocom/2/2a/bn409ikm4m2ir8inziq4jgl12f1lk53.png",
+  "小灵面":"https://patchwiki.biligame.com/images/rocom/c/ce/60arfjew3ryqzrh5dqh8mi6axn595h4.png",
+  "暗影灵面":"https://patchwiki.biligame.com/images/rocom/e/ee/8iz9eknhqvv3ntbw6r2ksojvp3dfekx.png",
+  "幽冥眼":"https://patchwiki.biligame.com/images/rocom/2/23/1y27uyj9zvo1gctws3g4ru9kgsg3thg.png",
+  "梦游":"https://patchwiki.biligame.com/images/rocom/2/21/oaaweyscathn6oqa015bfb6o9w5cbsa.png",
+  "梦悠悠":"https://patchwiki.biligame.com/images/rocom/2/2b/glndghgzgkl35dw5l2jzm8m4cc3dv22.png",
+  "兽花蕾":"https://patchwiki.biligame.com/images/rocom/f/fb/40ew1mdy3j3km17nwkdvlit9es9y39b.png",
+  "伏地兽":"https://patchwiki.biligame.com/images/rocom/5/5c/tspudx138x6hgz6dth0361r383pr0ha.png",
+  "贪食鼹":"https://patchwiki.biligame.com/images/rocom/d/d1/ps5nra6q9tzlnl4s6tkz4g5eejsr497.png",
+  "巨噬针鼹":"https://patchwiki.biligame.com/images/rocom/b/bf/kh1j7ti0ytu5d4nvr4te6kqakcclvx6.png",
+  "蹦蹦种子":"https://patchwiki.biligame.com/images/rocom/3/33/5rqqxhxtsklncbih4ii40p13jkrbqby.png",
+  "蹦蹦草":"https://patchwiki.biligame.com/images/rocom/6/62/sdazex9mreedpinwxklyhfu4k9xi8h9.png",
+  "蹦蹦花":"https://patchwiki.biligame.com/images/rocom/b/b4/jpdd60oi1k87a3tjhtdhl6n7uf6zn7x.png",
+  "电咩咩":"https://patchwiki.biligame.com/images/rocom/5/57/rrzi4lxo68m4mmhokly3l8z4t2ti2r7.png",
+  "粉咩咩":"https://patchwiki.biligame.com/images/rocom/d/d4/90spmq5ikabu64yf2g3l5lk8z3vvdpn.png",
+  "电球咩咩":"https://patchwiki.biligame.com/images/rocom/0/01/4sz6qymt56rlm9ybuobr7s76qonzxvu.png",
+  "蒲公英":"https://patchwiki.biligame.com/images/rocom/1/1d/87el3plwkuzm4wsb0l6s3ffqowsbiwl.png",
+  "蒲公英娃娃":"https://patchwiki.biligame.com/images/rocom/e/eb/8np4gxq8dybdydnv77kwoc300to6ont.png",
+  "伊贝儿":"https://patchwiki.biligame.com/images/rocom/b/b2/3x1hdgzmc2cyjh9zkfdyw1smgck9o3r.png",
+  "伊贝粉粉":"https://patchwiki.biligame.com/images/rocom/9/9e/ld012t25twk5oisvs10ok7g2t7apki1.png",
+  "白发懒人":"https://patchwiki.biligame.com/images/rocom/4/46/06pz2jvhh5k0ukbgj30jmdfyz4nic06.png",
+  "动力猿":"https://patchwiki.biligame.com/images/rocom/9/98/okpl88mwskdjsdfwxwln1kbpwxxly69.png",
+  "瞌睡王":"https://patchwiki.biligame.com/images/rocom/a/a2/64947rnxu8ncihl37rqldr3653bg57n.png",
+  "海盔虫":"https://patchwiki.biligame.com/images/rocom/c/c5/hyqqzb0xxpt4zjthslvr4y25bvsbkvg.png",
+  "刺盔虫":"https://patchwiki.biligame.com/images/rocom/d/d9/4p1drrucxykr3h3aaxf4xxk9l59554s.png",
+  "千棘盔":"https://patchwiki.biligame.com/images/rocom/d/d3/m619bkrakzm4rsb834fgl8s3tuleqzw.png",
+  "菊花梨":"https://patchwiki.biligame.com/images/rocom/d/db/qitqnhdvjw8gwhnvvapfuqv6g0qgaef.png",
+  "小星光":"https://patchwiki.biligame.com/images/rocom/b/b1/o9j051uk3ed7na8hgl6lyic6xv38mjb.png",
+  "星光狮":"https://patchwiki.biligame.com/images/rocom/7/75/cjjrzihw6bz4uzfdn1npim98tas9p21.png",
+  "一窝蜂":"https://patchwiki.biligame.com/images/rocom/d/de/drnf14ybuu1j1ulcxyktvpr52tlw89x.png",
+  "黄蜂后":"https://patchwiki.biligame.com/images/rocom/c/cc/81ny58tuiqt9xd2e6tsi79lf7yigchq.png",
+  "花魁蜂后":"https://patchwiki.biligame.com/images/rocom/7/7c/la0ecwe4eufml69boq4366g7gbnfra1.png",
+  "小夜":"https://patchwiki.biligame.com/images/rocom/7/72/482iqm8394vdtee3ylwiwyndj9tr8vq.png",
+  "紫夜":"https://patchwiki.biligame.com/images/rocom/1/14/ev4kpmwhjhjkpbr8fkexil8olnj0qd5.png",
+  "朔夜伊芙":"https://patchwiki.biligame.com/images/rocom/4/47/iefezmj355h7aifobba452t5fax5sup.png",
+  "乖乖鹄":"https://patchwiki.biligame.com/images/rocom/5/5a/t2rdnue1b6xwisya3nw5oyti9t2wdur.png",
+  "蓝珠天鹅":"https://patchwiki.biligame.com/images/rocom/5/5b/qho9vlfx1c2x6kn2a6hrbjx6b7ldqs8.png",
+  "翠顶夫人":"https://patchwiki.biligame.com/images/rocom/8/8d/0mse3bf6b98dflfbq9bwjeofgi8lo24.png",
+  "黑羽夫人":"https://patchwiki.biligame.com/images/rocom/6/63/6f0vzmzh3c2vr7vu4cli5ppzwcf18di.png",
+  "锤头鹳":"https://patchwiki.biligame.com/images/rocom/c/c8/0kv8ab3s5umo3dbcwsthu9xnpo9y1fc.png",
+  "绿草精灵":"https://patchwiki.biligame.com/images/rocom/1/17/i57n7v6fkt96if840ri0w2jwf07rsgr.png",
+  "魔草巫灵":"https://patchwiki.biligame.com/images/rocom/5/59/1efyfsgz5qsbi73ldyaoxlziimgv58k.png",
+  "记忆石":"https://patchwiki.biligame.com/images/rocom/0/0a/q6hhh7atr12ne3qx79r3q311a3pcmo9.png",
+  "咔咔羽毛":"https://patchwiki.biligame.com/images/rocom/e/ed/ob21aol2viw67k7tp5830dj3rzphp66.png",
+  "咔咔雀":"https://patchwiki.biligame.com/images/rocom/9/9a/ap3uj4ncl7ems9nor7p2eekc040rowl.png",
+  "咔咔鸟":"https://patchwiki.biligame.com/images/rocom/f/fa/9xi3n8libbst7y2xe4bja79hfbmcmmn.png",
+  "小草虫":"https://patchwiki.biligame.com/images/rocom/a/a3/4wnznw67s6p9vg2jru046cjq7q8qs8w.png",
+  "草衣虫":"https://patchwiki.biligame.com/images/rocom/9/92/cxu0820j279llw3cmwkhmhqa0cac6ui.png",
+  "花衣蝶":"https://patchwiki.biligame.com/images/rocom/c/ca/ssjrnqrtjz4ftobafu4guizlkdpye0f.png",
+  "绿翼鸟":"https://patchwiki.biligame.com/images/rocom/6/64/6legu9g43vllzz0bwdewrpp0f6zmwdu.png",
+  "魔翼鸟":"https://patchwiki.biligame.com/images/rocom/4/4d/di46fdrniv7kdxjfmi5kym1373p4xme.png",
+  "魔眷鸟":"https://patchwiki.biligame.com/images/rocom/7/76/qdoq3s6blcshbk7z6iki63glfphv1ap.png",
+  "阿米亚特":"https://patchwiki.biligame.com/images/rocom/0/01/qzl2l4nltxeu187qw1a2ybgfe5qj2tf.png",
+  "阿米樱":"https://patchwiki.biligame.com/images/rocom/c/c6/mlsnrq1x6vea9vvb932aajlqpafb72q.png",
+  "罗隐":"https://patchwiki.biligame.com/images/rocom/3/38/495925un1xk6eioymvva969ahadlk3m.png",
+  "风铃鲨":"https://patchwiki.biligame.com/images/rocom/f/fe/88nqs9bcxmqlj6ad7xoyz36k5fxw4qe.png",
+  "蓝蝶鲨":"https://patchwiki.biligame.com/images/rocom/0/0a/ti363dbka1pfizpes11yhv112jlt4j5.png",
+  "彩蝶鲨":"https://patchwiki.biligame.com/images/rocom/5/51/eeqyrw3rswylx1c4sc3kxpzfgu5yqgm.png",
+  "石石":"https://patchwiki.biligame.com/images/rocom/c/c6/ozlttesinkk43ayc3sv3tbab5ckbshi.png",
+  "巨灵石":"https://patchwiki.biligame.com/images/rocom/c/c1/c0lw5946cwte5stco3xurz3c0d98x2t.png",
+  "仪使者":"https://patchwiki.biligame.com/images/rocom/9/98/a4s6v19kpxbuk9cprtbjxwgs2xwxi70.png",
+  "仪式之星":"https://patchwiki.biligame.com/images/rocom/a/a3/oomva04tf8o7qrqqakm0jxwilzw3c8o.png",
+  "仪式巨像":"https://patchwiki.biligame.com/images/rocom/6/6d/5ye4a7k1u4q5lzf6ibnmwb1d3vtzlld.png",
+  "小独角兽":"https://patchwiki.biligame.com/images/rocom/e/ec/qdyvecckyuhnazeotxq9wkxwzb4ws8o.png",
+  "白金独角兽":"https://patchwiki.biligame.com/images/rocom/b/b0/6mn7g1bmit3kop684uwf2ns9tg4rsed.png",
+  "旋叶虫":"https://patchwiki.biligame.com/images/rocom/d/d6/jparkpdxm8e8qe6r164oni4tduf4qsq.png",
+  "蓬叶虫":"https://patchwiki.biligame.com/images/rocom/b/ba/p11mh7sopmm5wvvo4b0maw1j31n6vav.png",
+  "风滚暮虫":"https://patchwiki.biligame.com/images/rocom/5/53/i7jmthl2o8l116rbhkn2fyjmhtf57s5.png",
+  "忽幽狸":"https://static.gamecenter.qq.com/xgame/roco-kingdom/compendium/a/i/NO.123_忽幽狸.png",
+  "影狸":"https://patchwiki.biligame.com/images/rocom/5/50/cwmitfohkag0d2t5zfu055dhwrm4vxk.png",
+  "多多":"https://patchwiki.biligame.com/images/rocom/c/ce/616cnqj5bbxqzen5zwhzqhst14lpua9.png",
+  "多啦多":"https://patchwiki.biligame.com/images/rocom/c/ce/aewpz1647wrfl4r6fzxzem25ia6w3z8.png",
+  "古啦多":"https://patchwiki.biligame.com/images/rocom/d/d8/nauiiyi051f6jwn5tuy0mrao8j1z1hn.png",
+  "哭哭菇":"https://patchwiki.biligame.com/images/rocom/e/ee/r5ob8gjuzspmnvdafl5zf5836e6bf6g.png",
+  "怖哭菇":"https://patchwiki.biligame.com/images/rocom/7/77/0vwsiij65kn8tbfm24x0zxekycspl5d.png",
+  "怖须菇":"https://patchwiki.biligame.com/images/rocom/a/a5/bh34wp7r6rvgj50zw0rz9uh7w1onmvl.png",
+  "恶魔狼":"https://patchwiki.biligame.com/images/rocom/6/6a/8rz167blfbrzzs44u5mq8a0k7im6ap8.png",
+  "恶魔狼王":"https://patchwiki.biligame.com/images/rocom/c/cd/1qfkgvqe3ah6vtttso6rmj8eeddxh6u.png",
+  "小电企鹅":"https://patchwiki.biligame.com/images/rocom/d/d6/4seo2uqqap8978sndkvqzoez1nc8nwy.png",
+  "电企鹅":"https://patchwiki.biligame.com/images/rocom/b/be/9br0yfxnfz0dsnrtgc7tlt75qtwxycl.png",
+  "治愈兔":"https://patchwiki.biligame.com/images/rocom/a/aa/rngx23e2gk0fv954dvqfy4imdotkztj.png",
+  "大耳帽兜":"https://patchwiki.biligame.com/images/rocom/9/90/5nj4in6eecm1rhiqat7avfogm5l3cx0.png",
+  "雪娃娃":"https://patchwiki.biligame.com/images/rocom/2/2f/e14xbg7hrv1sv43e1qqhk145dsjcd3x.png",
+  "双灯鱼":"https://patchwiki.biligame.com/images/rocom/3/36/5i3mvo96bopno2o7f5h1bz7oz4hpkyq.png",
+  "利灯鱼":"https://patchwiki.biligame.com/images/rocom/f/f0/q3g76bthejmlv9o6phrchq0cpdlfzhy.png",
+  "夜枭":"https://patchwiki.biligame.com/images/rocom/6/63/ff8hybk5g0efhfnva9476qaovcmdl2i.png",
+  "小皮球":"https://patchwiki.biligame.com/images/rocom/1/11/coplggyd0xwtvzzkw5d1say369yg1oy.png",
+  "小绒茧":"https://patchwiki.biligame.com/images/rocom/5/51/fzhzu0tmqg25ud42u7z9a95msp1bphh.png",
+  "獠牙猪":"https://patchwiki.biligame.com/images/rocom/f/f1/9u3fequest0u8fn680z2oz0ycca8miv.png",
+  "机幕方舟":"",
+  "机幕方舟✨":"",
+  "雪怪":"",
+  "雪怪✨":"",
+  "巨型雪怪":"",
+  "爆焰喷喷":"",
+  "爆焰喷喷✨":"",
+  "爆焰喷喷·异色":"",
+  "小丑豆豆":"",
+  "小丑公爵":"",
+  "小鼓象":"",
+  "巨鼓象":"",
+  "猴麦仔":"",
+  "音碟吼":"",
+  "烟火团":"",
+  "烟花伯爵":"",
+  "狐脸擦擦":"",
+  "炫光迪迪":"",
+  "霹雳迪迪":"",
+  "咕咕帽":"",
+  "咕德帽帽":"",
+  "小皮球":"https://patchwiki.biligame.com/images/rocom/1/11/coplggyd0xwtvzzkw5d1say369yg1oy.png",
+  "气球猫":"https://patchwiki.biligame.com/images/rocom/3/31/rt7jxpcoc6msmzccuxw2vlait3poir9.png",
+  "帅帅魔偶":"https://patchwiki.biligame.com/images/rocom/2/25/qjfnyp5cg0l1wyuoxsdqw5kfu9vxsfu.png",
+  "牵线木偶":"",
+  "红丝绒":"https://patchwiki.biligame.com/images/rocom/0/00/lbkgbqads9s37knw6rqxu3fuylvqwro.png",
+  "红绒十字":"https://patchwiki.biligame.com/images/rocom/c/c1/1i2n00tjjxrhc3x9p39hrg4kxujapoh.png",
+  "卡拉波斯":"https://patchwiki.biligame.com/images/rocom/a/a4/sikl3gdg7nfmccyc1x8upq275uk8lsi.png",
+  "帽兜娃娃":"https://patchwiki.biligame.com/images/rocom/5/5a/q7sirjhoajj2l6afronw9k5u8w84ibs.png",
+  "波波螺":"https://patchwiki.biligame.com/images/rocom/0/00/n1wjd2lnqi3s5qqgpetirog1lcu6y3o.png",
+  "小翼龙":"https://patchwiki.biligame.com/images/rocom/1/18/4gm8dv39vje80wb9f9ri66pmdmb5zzw.png",
+  "雪豆丁":"https://patchwiki.biligame.com/images/rocom/d/d8/2thy3gt4khhs6gza0pb6ke0da94ajq8.png",
+  "火红尾":"https://patchwiki.biligame.com/images/rocom/0/00/gknyb1qbbno2vnvcvyb4p9a0o9y1owp.png",
+  "菇菇丁":"https://patchwiki.biligame.com/images/rocom/d/df/t98utjcp899ymqdm8bvpapuoajiri1k.png",
+  "豆丁鱼":"https://patchwiki.biligame.com/images/rocom/8/84/l03hb24992kdwomhy0qfjjynend0qdc.png",
+  "地鼠":"https://patchwiki.biligame.com/images/rocom/e/ed/p13cco2es9ta74gd9w8yqdoc0va3qp6.png",
+  "闪电环":"https://patchwiki.biligame.com/images/rocom/b/b8/o9no3jygnit09u4bsn3o7ezrji62524.png",
+  "螺旋帕帕":"https://patchwiki.biligame.com/images/rocom/2/2e/8sya38cbx002fydqgo0u3z0r4wzcmh9.png",
+  "果冻":"https://patchwiki.biligame.com/images/rocom/9/92/5pgbduguoappstj95ppzcb6rlxzs4f1.png",
+  "可立鸡":"https://patchwiki.biligame.com/images/rocom/2/2d/9w4l9rr13yoldnqxtppebm3tqovahde.png",
+  "草头鸭":"https://patchwiki.biligame.com/images/rocom/e/e3/23v62tjddaret7a0jlqww40noorvmir.png",
+  "呆小路":"https://patchwiki.biligame.com/images/rocom/b/be/4zu0yqt23bt4cva2bswky1q5ivje1tw.png",
+  "小箱怪":"https://patchwiki.biligame.com/images/rocom/0/0a/ocy3pzt2cn0mmx85cm8is2ulwy8s2ii.png",
+  "多西":"https://patchwiki.biligame.com/images/rocom/9/94/hsqyxfmg0p0gz8s36uzb1b7ldd6etb1.png",
+  "呼呼猪":"https://patchwiki.biligame.com/images/rocom/e/e8/8vuqx5j838k85ddgjcl56zhh42wtfqa.png",
+  "雪娃娃":"https://patchwiki.biligame.com/images/rocom/2/2f/e14xbg7hrv1sv43e1qqhk145dsjcd3x.png",
+  "古钟蛇":"https://patchwiki.biligame.com/images/rocom/1/16/hix4wlbyi39s3zqqpruq1n8z6rg7sc0.png",
+  "小甲虫":"https://patchwiki.biligame.com/images/rocom/c/c5/gxb5ofg998pswe6vu88c1gtiiibwnro.png",
+  "灵狐":"https://patchwiki.biligame.com/images/rocom/0/0a/nmkg7ux0y9xb2o2q92ircdz5t11die4.png",
+  "拉特":"https://patchwiki.biligame.com/images/rocom/a/a1/4pqv1u751dss8ff0u87y747ot29b4m9.png",
+  "甜田螺":"https://patchwiki.biligame.com/images/rocom/5/55/bck3l95dm5ub49vdc3ung79bh0edirl.png",
+  "吸泥鸥":"https://patchwiki.biligame.com/images/rocom/8/8e/br2yi6aj77tv3j8bstqidsiuvadc0od.png",
+  "机械方方":"https://patchwiki.biligame.com/images/rocom/0/0b/pgpg5oimlp3vj22sforlyu0o5mlenw8.png",
+  "小狮鹫":"https://patchwiki.biligame.com/images/rocom/5/5c/6s8lzcshdpyujwzub5zz1wk94d16vp2.png",
+  "胆小鳗鱼":"https://patchwiki.biligame.com/images/rocom/6/65/sexctmvdy5pnj2fgqdue7sovqn9cw4z.png",
+  "火尾瓦特":"https://patchwiki.biligame.com/images/rocom/1/1d/9mmja7l04ln5fe2fn5dhql2nrh0tq4f.png",
+  "伊雷龙":"https://patchwiki.biligame.com/images/rocom/6/66/iq3mle7m6g6cwmo5u0xh5afcf6fzsmd.png",
+  "水母":"https://static.gamecenter.qq.com/xgame/roco-kingdom/compendium/a/i/NO.244_翡翠水母.png",
+  "电动长颈鹿":"https://patchwiki.biligame.com/images/rocom/9/95/hf6exuai3em02ggnvi6068tatwsg1co.png",
+  "里拉鳐":"https://patchwiki.biligame.com/images/rocom/8/80/13gxjtrh4mt3mhyoc1is69gz7vfm3tv.png",
+  "空空颅":"https://static.gamecenter.qq.com/xgame/roco-kingdom/compendium/a/i/NO.327_空空颅.png",
+  "立方人":"https://static.gamecenter.qq.com/xgame/roco-kingdom/compendium/a/i/NO.265_立方人.png",
+  "酷拉":"https://static.gamecenter.qq.com/xgame/roco-kingdom/compendium/a/i/NO.206_酷拉.png",
+  "窃光蚊":"https://static.gamecenter.qq.com/xgame/roco-kingdom/compendium/a/i/NO.324_窃光蚊.png",
+  "格兰种子":"https://static.gamecenter.qq.com/xgame/roco-kingdom/compendium/a/i/NO.274_格兰种子.png",
+  "格兰球":"https://static.gamecenter.qq.com/xgame/roco-kingdom/compendium/a/i/NO.276_格兰球.png",
+  "粉星仔":"https://static.gamecenter.qq.com/xgame/roco-kingdom/compendium/a/i/NO.335_粉星仔.png",
+  "粉粉星":"https://static.gamecenter.qq.com/xgame/roco-kingdom/compendium/a/i/NO.330_粉粉星.png",
+  "月牙雪熊":"https://static.gamecenter.qq.com/xgame/roco-kingdom/compendium/a/i/NO.322_月牙雪熊.png",
+  "贝瑟":"https://static.gamecenter.qq.com/xgame/roco-kingdom/compendium/a/i/NO.332_贝瑟.png",
+  "贝古斯":"https://static.gamecenter.qq.com/xgame/roco-kingdom/compendium/a/i/NO.334_贝古斯.png",
+  "燃薪虫":"https://static.gamecenter.qq.com/xgame/roco-kingdom/compendium/a/i/NO.326_燃薪虫.png",
+  "海豹战士":"https://patchwiki.biligame.com/images/rocom/b/b5/n6mz568m7fofwz1w3lkc5qk6bsxfy9s.png"
+};
+
+var ATTR_EMOJI = { 草:"🌿", 火:"🔥", 水:"💧", 光:"✨", 地:"🏔️", 电:"⚡", 毒:"☠️", 虫:"🐛", 武:"👊", 翼:"🕊️", 萌:"💕", 幽:"👻", 恶:"😈", 机械:"⚙️", 幻:"🌈", 普通:"⚪", 冰:"❄️", 龙:"🐉" };
+var ATTR_COLOR = { 草:"#4caf50", 火:"#ef5350", 水:"#42a5f5", 光:"#fdd835", 地:"#8d6e63", 电:"#ffd600", 毒:"#ab47bc", 虫:"#8bc34a", 武:"#d84315", 翼:"#90caf9", 萌:"#f48fb1", 幽:"#7b1fa2", 恶:"#455a64", 机械:"#78909c", 幻:"#ce93d8", 普通:"#bdbdbd", 冰:"#80deea", 龙:"#ff6f00" };
+
+// ===========================================================
+// PAGE NAVIGATION
+// ===========================================================
+var currentPage = 'merchant';
+function switchPage(page) {
+  currentPage = page;
+  document.querySelectorAll('.nav-tab').forEach(function(t){ t.classList.toggle('active', t.dataset.page===page); });
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.toggle('active', p.id===page+'Page'); });
+  var titles = { merchant:'远行商人 · 实时商品', egg:'孵蛋反查 · 精灵匹配', pokedex:'精灵图鉴 · 133只全收录', shiny:'异色追踪 · 自定义', events:'活动资讯 · 赛季动态' };
+  document.getElementById('headerSubtitle').textContent = titles[page] || '';
+  document.getElementById('refreshFab').style.display = page==='merchant' ? '' : 'none';
+  if (page==='pokedex') renderPokedex();
+  if (page==='shiny') renderShiny();
+  if (page==='events') renderEvents();
+}
+document.querySelectorAll('.nav-tab').forEach(function(t){ t.addEventListener('click', function(){ switchPage(this.dataset.page); }); });
+
+function esc(s) { if (!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function toast(msg) { var t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(function(){t.classList.remove('show');},2000); }
+function getSpriteImg(name) { return SPRITE_IMG[name] || null; }
+function spriteImg(name, attrs) {
+  var url = getSpriteImg(name);
+  var mainAttr = (attrs||'').split(',')[0] || '普通';
+  var color = ATTR_COLOR[mainAttr] || '#78909c';
+  if (url) {
+    return '<img src="'+url+'" alt="'+esc(name)+'" onerror="var s=this.parentElement;s.innerHTML=\'<div class=sprite-placeholder style=background:'+color+'>'+esc(name.charAt(0))+'</div>\'">';
+  }
+  var initials = name.length > 3 ? name.substring(0,2) : name.substring(0,2);
+  return '<div class="sprite-placeholder" style="background:'+color+'">'+esc(initials)+'</div>';
+}
+
+// ===========================================================
+// POKEDEX DATA (133 sprites)
+// ===========================================================
+var POKEDEX = [
+  {num:1,name:"迪莫",attrs:"光"},{num:2,name:"喵喵",attrs:"草"},{num:3,name:"喵呜",attrs:"草"},
+  {num:4,name:"魔力猫",attrs:"草"},{num:5,name:"火花",attrs:"火"},{num:6,name:"焰火",attrs:"火"},
+  {num:7,name:"火神",attrs:"火"},{num:8,name:"水蓝蓝",attrs:"水"},{num:9,name:"波波拉",attrs:"水"},
+  {num:10,name:"水灵",attrs:"水"},{num:11,name:"鸭吉吉",attrs:"普通"},{num:12,name:"板板壳",attrs:"水"},
+  {num:13,name:"咔咔壳",attrs:"水"},{num:14,name:"水泡壳",attrs:"水"},{num:15,name:"锥尾羊",attrs:"幽"},
+  {num:16,name:"铃兰羊",attrs:"幽"},{num:17,name:"花影羚羊",attrs:"幽,恶"},{num:18,name:"雪绒鸟",attrs:"翼"},
+  {num:19,name:"冬羽雀",attrs:"翼"},{num:20,name:"岚鸟",attrs:"翼"},{num:21,name:"小灵菇",attrs:"幽"},
+  {num:22,name:"幻灵菇",attrs:"幽,草"},{num:23,name:"幻影灵菇",attrs:"幽,草"},{num:24,name:"石肤蜥",attrs:"地"},
+  {num:25,name:"石刺蜥",attrs:"地"},{num:26,name:"石冠王蜥",attrs:"地"},{num:27,name:"布是石",attrs:"地"},
+  {num:28,name:"布是岩",attrs:"地"},{num:29,name:"布克棱岩",attrs:"地"},{num:30,name:"恶魔叮",attrs:"恶,翼",shiny:true},
+  {num:31,name:"叮叮恶魔",attrs:"恶,翼",shiny:true},{num:32,name:"毛毛",attrs:"虫,萌"},{num:33,name:"爬爬",attrs:"虫,萌"},
+  {num:34,name:"化蝶",attrs:"虫,萌"},{num:35,name:"幽影树",attrs:"幽,草"},{num:36,name:"小鼠獭",attrs:"普通,水"},
+  {num:37,name:"燕尾獭",attrs:"普通,水"},{num:38,name:"卷胡巨獭",attrs:"普通,水"},{num:39,name:"矿晶虫",attrs:"光,地"},
+  {num:40,name:"晶石蜗",attrs:"光,地"},{num:41,name:"奇丽草",attrs:"草",shiny:true},{num:42,name:"奇丽叶",attrs:"草",shiny:true},
+  {num:43,name:"奇丽花",attrs:"草",shiny:true},{num:44,name:"丢丢",attrs:"草"},{num:45,name:"卡卡虫",attrs:"草"},
+  {num:46,name:"卡瓦重",attrs:"草"},{num:47,name:"护主犬",attrs:"火"},{num:48,name:"音速犬",attrs:"火"},
+  {num:49,name:"绿耳松鼠",attrs:"普通"},{num:50,name:"抱枕松鼠",attrs:"普通"},{num:51,name:"蹦床松鼠",attrs:"普通"},
+  {num:52,name:"嘟嘟煲",attrs:"毒"},{num:53,name:"嘟嘟锅",attrs:"毒"},{num:54,name:"小灵面",attrs:"幽"},
+  {num:55,name:"暗影灵面",attrs:"幽"},{num:56,name:"幽冥眼",attrs:"幽"},{num:57,name:"梦游",attrs:"幽"},
+  {num:58,name:"梦悠悠",attrs:"幽"},{num:59,name:"兽花蕾",attrs:"光,草"},{num:60,name:"伏地兽",attrs:"普通"},
+  {num:61,name:"贪食鼹",attrs:"普通"},{num:62,name:"巨噬针鼹",attrs:"普通"},{num:63,name:"蹦蹦种子",attrs:"草,毒"},
+  {num:64,name:"蹦蹦草",attrs:"草,毒"},{num:65,name:"蹦蹦花",attrs:"草,毒"},{num:66,name:"电咩咩",attrs:"电"},
+  {num:67,name:"粉咩咩",attrs:"电"},{num:68,name:"电球咩咩",attrs:"电"},{num:69,name:"蒲公英",attrs:"草,萌"},
+  {num:70,name:"蒲公英娃娃",attrs:"草,萌"},{num:71,name:"伊贝儿",attrs:"草"},{num:72,name:"伊贝粉粉",attrs:"草"},
+  {num:73,name:"白发懒人",attrs:"普通"},{num:74,name:"动力猿",attrs:"普通,武"},{num:75,name:"瞌睡王",attrs:"普通,武"},
+  {num:76,name:"海盔虫",attrs:"水,毒"},{num:77,name:"刺盔虫",attrs:"水,毒"},{num:78,name:"千棘盔",attrs:"水,毒"},
+  {num:79,name:"菊花梨",attrs:"萌",shiny:true},{num:80,name:"小星光",attrs:"电"},{num:81,name:"星光狮",attrs:"电"},
+  {num:82,name:"一窝蜂",attrs:"虫,翼"},{num:83,name:"黄蜂后",attrs:"虫,翼"},{num:84,name:"花魁蜂后",attrs:"虫,翼"},
+  {num:85,name:"小夜",attrs:"恶",shiny:true},{num:86,name:"紫夜",attrs:"恶",shiny:true},{num:87,name:"朔夜伊芙",attrs:"恶",shiny:true},
+  {num:88,name:"乖乖鹄",attrs:"翼,水"},{num:89,name:"蓝珠天鹅",attrs:"翼,水"},{num:90,name:"翠顶夫人",attrs:"翼,水"},
+  {num:91,name:"黑羽夫人",attrs:"翼,恶"},{num:92,name:"锤头鹳",attrs:"翼,水"},{num:93,name:"绿草精灵",attrs:"草,幻"},
+  {num:94,name:"魔草巫灵",attrs:"草,幻"},{num:95,name:"记忆石",attrs:"地"},{num:96,name:"咔咔羽毛",attrs:"翼,普通"},
+  {num:97,name:"咔咔雀",attrs:"翼,普通"},{num:98,name:"咔咔鸟",attrs:"翼,普通"},{num:99,name:"小草虫",attrs:"虫,草"},
+  {num:100,name:"草衣虫",attrs:"虫,草"},{num:101,name:"花衣蝶",attrs:"虫,草"},{num:102,name:"绿翼鸟",attrs:"萌,翼"},
+  {num:103,name:"魔翼鸟",attrs:"萌,翼"},{num:104,name:"魔眷鸟",attrs:"萌,翼"},{num:105,name:"阿米亚特",attrs:"地"},
+  {num:106,name:"阿米樱",attrs:"地"},{num:107,name:"罗隐",attrs:"地"},{num:108,name:"风铃鲨",attrs:"水"},
+  {num:109,name:"蓝蝶鲨",attrs:"水"},{num:110,name:"彩蝶鲨",attrs:"水"},{num:111,name:"石石",attrs:"地"},
+  {num:112,name:"巨灵石",attrs:"地"},{num:113,name:"仪使者",attrs:"光"},{num:114,name:"仪式之星",attrs:"光"},
+  {num:115,name:"仪式巨像",attrs:"光"},{num:116,name:"小独角兽",attrs:"光"},{num:117,name:"白金独角兽",attrs:"光"},
+  {num:118,name:"旋叶虫",attrs:"草"},{num:119,name:"蓬叶虫",attrs:"草"},{num:120,name:"风滚暮虫",attrs:"草"},
+  {num:121,name:"小夜",attrs:"恶",alt:true},{num:122,name:"忽幽狸",attrs:"恶"},{num:123,name:"影狸",attrs:"恶"},
+  {num:124,name:"多多",attrs:"普通"},{num:125,name:"多啦多",attrs:"普通"},{num:126,name:"古啦多",attrs:"普通"},
+  {num:127,name:"哭哭菇",attrs:"幽"},{num:128,name:"怖哭菇",attrs:"幽"},{num:129,name:"怖须菇",attrs:"幽"},
+  {num:130,name:"恶魔狼",attrs:"恶",shiny:true},{num:131,name:"小电企鹅",attrs:"电"},{num:132,name:"电企鹅",attrs:"电"},
+  {num:133,name:"治愈兔",attrs:"普通",shiny:true}
+];
+
+// S2 Season new sprites (348-375) — for shiny tracker
+var S2_SPIRITS = [
+  {num:348,name:"机幕方舟",attrs:"机械"},{num:349,name:"机幕方舟✨",attrs:"机械",shiny:true},
+  {num:352,name:"雪怪",attrs:"草,冰"},{num:353,name:"雪怪✨",attrs:"草,冰",shiny:true},
+  {num:354,name:"爆焰喷喷",attrs:"火,龙"},{num:355,name:"爆焰喷喷✨",attrs:"火,龙",shiny:true},
+  // Circus encounter spirits (base forms)
+  {num:358,name:"小皮球",attrs:"普通"},{num:359,name:"气球猫",attrs:"萌"},
+  {num:360,name:"帅帅魔偶",attrs:"幻"},{num:361,name:"牵线木偶",attrs:"幽"},
+  {num:362,name:"红丝绒",attrs:"恶"},{num:363,name:"红绒十字",attrs:"恶,翼"},
+  {num:364,name:"卡拉波斯",attrs:"幽"},{num:365,name:"帽兜娃娃",attrs:"幽,萌"}
+];
+
+// ===========================================================
+// SHINY DATA — Initial forms only, with evolution chains
+// ===========================================================
+// Each entry: num/name/attrs are the INITIAL form.
+// evos[] lists all subsequent evolved forms (also shiny-capable).
+// When user tracks a mon, the tracking card shows the full chain.
+var S1_SHINY = [
+  // —— 有Wiki图片的 ——
+  {num:41, name:"奇丽草", attrs:"草", evos:[
+    {num:42, name:"奇丽叶", attrs:"草"},
+    {num:43, name:"奇丽花", attrs:"草"}
+  ]},
+  {num:47, name:"护主犬", attrs:"火", evos:[
+    {num:48, name:"音速犬", attrs:"火"}
+  ]},
+  {num:130, name:"恶魔狼", attrs:"恶", evos:[
+    {num:131, name:"恶魔狼王", attrs:"恶"}
+  ]},
+  {num:133, name:"治愈兔", attrs:"普通", evos:[]},
+  {num:501, name:"大耳帽兜", attrs:"冰", evos:[
+    {num:502, name:"雪娃娃", attrs:"冰"}
+  ]},
+  {num:511, name:"双灯鱼", attrs:"水,电", evos:[
+    {num:512, name:"利灯鱼", attrs:"水,电"}
+  ]},
+  {num:513, name:"空空颅", attrs:"幽", evos:[
+    {num:514, name:"夜枭", attrs:"幽"}
+  ]},
+  {num:515, name:"立方人", attrs:"机械", evos:[
+    {num:516, name:"机械方方", attrs:"机械"}
+  ]},
+  {num:518, name:"呼呼猪", attrs:"冰", evos:[
+    {num:519, name:"獠牙猪", attrs:"冰,地"}
+  ]},
+  // —— 有数据但无Wiki图片（使用SVG占位图） ——
+  {num:503, name:"格兰种子", attrs:"草", evos:[
+    {num:504, name:"格兰球", attrs:"草"}
+  ]},
+  {num:505, name:"粉星仔", attrs:"超能", evos:[
+    {num:506, name:"粉粉星", attrs:"超能"}
+  ]},
+  {num:507, name:"月牙雪熊", attrs:"冰", evos:[]},
+  {num:508, name:"贝瑟", attrs:"机械", evos:[
+    {num:509, name:"贝古斯", attrs:"机械"}
+  ]},
+  {num:510, name:"燃薪虫", attrs:"火", evos:[]},
+  {num:517, name:"酷拉", attrs:"电", evos:[]},
+  {num:520, name:"窃光蚊", attrs:"虫", evos:[]}
+];
+
+var S2_SHINY = [
+  // —— 常驻8只 (season-permanent, spawn in S2 maps) ——
+  {num:47, name:"护主犬", attrs:"火", evos:[{num:48, name:"音速犬", attrs:"火"}]},
+  {num:71, name:"伊贝儿", attrs:"草", evos:[{num:72, name:"伊贝粉粉", attrs:"草"}]},
+  {num:30, name:"恶魔叮", attrs:"恶,翼", evos:[{num:31, name:"叮叮恶魔", attrs:"恶,翼"}]},
+  {num:79, name:"菊花梨", attrs:"萌", evos:[]},
+  {num:521, name:"公平鸽", attrs:"翼", evos:[]},
+  {num:522, name:"灵狐", attrs:"幻", evos:[]},
+  {num:85, name:"小夜", attrs:"恶", evos:[
+    {num:86, name:"紫夜", attrs:"恶"},
+    {num:87, name:"朔夜伊芙", attrs:"恶"}
+  ]},
+  {num:116, name:"小独角兽", attrs:"光", evos:[
+    {num:117, name:"白金独角兽", attrs:"光"}
+  ]},
+  // —— 奇遇8只 (season encounter quests) ——
+  {num:523, name:"小丑豆豆", attrs:"幽", evos:[
+    {num:524, name:"小丑公爵", attrs:"幽,恶"}
+  ]},
+  {num:525, name:"小鼓象", attrs:"机械", evos:[
+    {num:526, name:"巨鼓象", attrs:"机械"}
+  ]},
+  {num:527, name:"猴麦仔", attrs:"电", evos:[
+    {num:528, name:"音碟吼", attrs:"电,机械"}
+  ]},
+  {num:529, name:"烟火团", attrs:"火", evos:[
+    {num:530, name:"烟花伯爵", attrs:"火,毒"}
+  ]},
+  {num:360, name:"帅帅魔偶", attrs:"幻", evos:[
+    {num:361, name:"牵线木偶", attrs:"幽"}
+  ]},
+  {num:531, name:"狐脸擦擦", attrs:"恶", evos:[]},
+  {num:532, name:"炫光迪迪", attrs:"电", evos:[
+    {num:533, name:"霹雳迪迪", attrs:"电,光"}
+  ]},
+  {num:534, name:"咕咕帽", attrs:"幽", evos:[
+    {num:535, name:"咕德帽帽", attrs:"幽"}
+  ]},
+  // —— 战令2只 (battle-pass exclusive) ——
+  {num:352, name:"雪怪", attrs:"草,冰", evos:[
+    {num:353, name:"巨型雪怪", attrs:"草,冰"}
+  ]},
+  {num:354, name:"爆焰喷喷", attrs:"火,龙", evos:[
+    {num:355, name:"爆焰喷喷·异色", attrs:"火,龙"}
+  ]}
+];
+
+var pokedexFilter = 'all';
+function getUniqueAttrs() {
+  var all = []; POKEDEX.forEach(function(s){
+    var parts = s.attrs.split(','); parts.forEach(function(a){ if (all.indexOf(a)===-1) all.push(a); });
+  }); return all;
+}
+function renderPokedexFilters() {
+  var attrs = getUniqueAttrs();
+  var html = '<div class="filter-chip'+(pokedexFilter==='all'?' active':'')+'" onclick="pokedexFilter=\'all\';renderPokedex()">全部</div>';
+  attrs.forEach(function(a){ html += '<div class="filter-chip'+(pokedexFilter===a?' active':'')+'" onclick="pokedexFilter=\''+a+'\';renderPokedex()">'+ (ATTR_EMOJI[a]||'')+' '+a+'</div>'; });
+  document.getElementById('pokedexFilters').innerHTML = html;
+}
+function renderPokedex() {
+  renderPokedexFilters();
+  var search = (document.getElementById('pokedexSearch').value||'').toLowerCase();
+  var filtered = POKEDEX.filter(function(s){
+    if (pokedexFilter!=='all' && s.attrs.indexOf(pokedexFilter)===-1) return false;
+    if (search && s.name.toLowerCase().indexOf(search)===-1 && String(s.num).indexOf(search)===-1) return false;
+    return true;
+  });
+  document.getElementById('pokedexCount').textContent = '共 '+filtered.length+' 只精灵';
+  var html = '';
+  filtered.forEach(function(s){
+    var priAttr = s.attrs.split(',')[0];
+    var imgHtml = spriteImg(s.name, priAttr);
+    html += '<div class="pokedex-card" onclick="openPokedexDetail('+s.num+')">'+
+      '<div class="pk-img">'+imgHtml+'</div>'+
+      '<div class="pk-num">NO.'+String(s.num).padStart(3,'0')+'</div>'+
+      '<div class="pk-name">'+esc(s.name)+(s.shiny?' ✨':'')+'</div>'+
+      '<div class="pk-attr">'+esc(s.attrs)+'</div></div>';
+  });
+  document.getElementById('pokedexGrid').innerHTML = html || '<div class="no-items" style="grid-column:1/-1">未找到匹配的精灵</div>';
+}
+function openPokedexDetail(num) {
+  var s = POKEDEX.find(function(x){return x.num===num;});
+  if (!s) return;
+  var priAttr = s.attrs.split(',')[0];
+  var imgHtml = spriteImg(s.name, priAttr);
+  var attrTags = s.attrs.split(',').map(function(a){ return '<span style="display:inline-block;padding:2px 8px;margin:2px;border-radius:8px;font-size:11px;background:'+(ATTR_COLOR[a]||'#555')+';color:#fff">'+(ATTR_EMOJI[a]||'')+' '+a+'</span>'; }).join('');
+  document.getElementById('pokedexDetailCard').innerHTML =
+    '<div class="detail-img">'+imgHtml+'</div>'+
+    '<div class="detail-name">'+esc(s.name)+(s.shiny?' ✨':'')+'</div>'+
+    '<div class="detail-num">NO.'+String(s.num).padStart(3,'0')+(s.shiny?' · 有异色形态':'')+'</div>'+
+    '<div class="detail-attr">'+attrTags+'</div>'+
+    '<div class="detail-info">洛克王国世界精灵图鉴收录<br>数据来源：Bilibili WIKI</div>'+
+    '<button class="detail-close" onclick="closePokedexDetail()">关闭</button>';
+  document.getElementById('pokedexDetail').classList.add('show');
+}
+function closePokedexDetail() { document.getElementById('pokedexDetail').classList.remove('show'); }
+
+// ===========================================================
+// EGG DATA — Verified with real hatch data
+// ===========================================================
+// Each entry: exact size range (m) and weight range (kg) from community-verified data
+// Source: luokewangguofudan.wiki + player self-reports
+var EGG_DATA = [
+  // Verified with real hatch data (mark verified:true)
+  {name:"水蓝蓝", sizeMin:0.19, sizeMax:0.27, weightMin:1.00, weightMax:1.36, cat:"1-1.8", verified:true},
+  {name:"喵喵",   sizeMin:0.23, sizeMax:0.31, weightMin:1.27, weightMax:1.84, cat:"1-1.8", verified:true},
+  {name:"火花",   sizeMin:0.23, sizeMax:0.29, weightMin:2.66, weightMax:3.40, cat:"1.8-4", verified:true},
+  {name:"迪莫",   sizeMin:0.23, sizeMax:0.32, weightMin:1.93, weightMax:2.80, cat:"1.8-4", verified:true},
+  {name:"波波螺", sizeMin:0.14, sizeMax:0.17, weightMin:1.70, weightMax:2.26, cat:"1.8-4", verified:true},
+  {name:"小翼龙", sizeMin:0.26, sizeMax:0.36, weightMin:8.79, weightMax:14.60,cat:"4-14", verified:true},
+  {name:"雪豆丁", sizeMin:0.37, sizeMax:0.51, weightMin:3.33, weightMax:5.00, cat:"1.8-4", verified:true},
+  {name:"火红尾", sizeMin:0.40, sizeMax:0.61, weightMin:8.02, weightMax:15.92,cat:"4-14", verified:true},
+  // Full 90-entry dataset (condensed — size/weight ranges from wiki data)
+  {name:"小灵面",   sizeMin:0.17, sizeMax:0.20, weightMin:0.04, weightMax:0.05, cat:"0-1"},
+  {name:"蒲公英",   sizeMin:0.14, sizeMax:0.17, weightMin:0.05, weightMax:0.08, cat:"0-1"},
+  {name:"旋叶虫",   sizeMin:0.04, sizeMax:0.06, weightMin:0.06, weightMax:0.09, cat:"0-1"},
+  {name:"菇菇丁",   sizeMin:0.11, sizeMax:0.15, weightMin:0.38, weightMax:0.48, cat:"0-1"},
+  {name:"豆丁鱼",   sizeMin:0.13, sizeMax:0.18, weightMin:0.44, weightMax:0.59, cat:"0-1"},
+  {name:"地鼠",     sizeMin:0.20, sizeMax:0.26, weightMin:0.64, weightMax:0.88, cat:"0-1"},
+  {name:"哭哭菇",   sizeMin:0.14, sizeMax:0.20, weightMin:0.71, weightMax:1.23, cat:"0-1"},
+  {name:"小草虫",   sizeMin:0.20, sizeMax:0.26, weightMin:0.75, weightMax:1.14, cat:"0-1"},
+  {name:"闪电环",   sizeMin:0.16, sizeMax:0.19, weightMin:0.89, weightMax:1.20, cat:"0-1"},
+  {name:"螺旋帕帕", sizeMin:0.15, sizeMax:0.17, weightMin:0.83, weightMax:1.32, cat:"0-1"},
+  {name:"恶魔叮",   sizeMin:0.17, sizeMax:0.21, weightMin:1.26, weightMax:1.49, cat:"1-1.8"},
+  {name:"绿翼鸟",   sizeMin:0.21, sizeMax:0.22, weightMin:1.27, weightMax:1.47, cat:"1-1.8"},
+  {name:"小电企鹅", sizeMin:0.19, sizeMax:0.23, weightMin:1.30, weightMax:2.00, cat:"1-1.8"},
+  {name:"毛毛",     sizeMin:0.14, sizeMax:0.19, weightMin:1.23, weightMax:1.78, cat:"1-1.8"},
+  {name:"伊贝儿",   sizeMin:0.19, sizeMax:0.26, weightMin:1.19, weightMax:1.65, cat:"1-1.8"},
+  {name:"果冻",     sizeMin:0.13, sizeMax:0.15, weightMin:1.55, weightMax:2.23, cat:"1-1.8"},
+  {name:"一窝蜂",   sizeMin:0.17, sizeMax:0.22, weightMin:1.56, weightMax:2.16, cat:"1-1.8"},
+  {name:"小夜",     sizeMin:0.23, sizeMax:0.29, weightMin:1.62, weightMax:2.73, cat:"1-1.8"},
+  {name:"奇丽草",   sizeMin:0.18, sizeMax:0.21, weightMin:1.65, weightMax:2.06, cat:"1-1.8"},
+  {name:"乖乖鹄",   sizeMin:0.22, sizeMax:0.27, weightMin:1.66, weightMax:2.11, cat:"1-1.8"},
+  {name:"可立鸡",   sizeMin:0.17, sizeMax:0.22, weightMin:1.66, weightMax:2.68, cat:"1-1.8"},
+  {name:"蹦蹦种子", sizeMin:0.22, sizeMax:0.27, weightMin:1.69, weightMax:2.12, cat:"1-1.8"},
+  {name:"菊花梨",   sizeMin:0.30, sizeMax:0.30, weightMin:1.73, weightMax:1.73, cat:"1-1.8"},
+  {name:"绿耳松鼠", sizeMin:0.24, sizeMax:0.28, weightMin:1.79, weightMax:2.30, cat:"1-1.8"},
+  {name:"兽花蕾",   sizeMin:0.17, sizeMax:0.17, weightMin:1.80, weightMax:1.99, cat:"1.8-4"},
+  {name:"丢丢",     sizeMin:0.17, sizeMax:0.21, weightMin:1.84, weightMax:2.41, cat:"1.8-4"},
+  {name:"草头鸭",   sizeMin:0.23, sizeMax:0.27, weightMin:1.93, weightMax:2.36, cat:"1.8-4"},
+  {name:"呆小路",   sizeMin:0.30, sizeMax:0.32, weightMin:1.98, weightMax:2.12, cat:"1.8-4"},
+  {name:"小箱怪",   sizeMin:0.16, sizeMax:0.18, weightMin:1.98, weightMax:2.51, cat:"1.8-4"},
+  {name:"矿晶虫",   sizeMin:0.28, sizeMax:0.28, weightMin:2.29, weightMax:2.29, cat:"1.8-4"},
+  {name:"多西",     sizeMin:0.34, sizeMax:0.34, weightMin:2.42, weightMax:2.42, cat:"1.8-4"},
+  {name:"呼呼猪",   sizeMin:0.22, sizeMax:0.31, weightMin:2.43, weightMax:3.52, cat:"1.8-4"},
+  {name:"雪娃娃",   sizeMin:0.12, sizeMax:0.17, weightMin:2.45, weightMax:3.12, cat:"1.8-4"},
+  {name:"小鼠獭",   sizeMin:0.17, sizeMax:0.20, weightMin:2.49, weightMax:2.77, cat:"1.8-4"},
+  {name:"古钟蛇",   sizeMin:0.45, sizeMax:0.46, weightMin:2.52, weightMax:3.12, cat:"1.8-4"},
+  {name:"小甲虫",   sizeMin:0.22, sizeMax:0.23, weightMin:2.61, weightMax:2.64, cat:"1.8-4"},
+  {name:"板板壳",   sizeMin:0.23, sizeMax:0.31, weightMin:2.63, weightMax:4.00, cat:"1.8-4"},
+  {name:"灵狐",     sizeMin:0.24, sizeMax:0.31, weightMin:2.68, weightMax:3.35, cat:"1.8-4"},
+  {name:"电咩咩",   sizeMin:0.27, sizeMax:0.28, weightMin:2.80, weightMax:2.96, cat:"1.8-4"},
+  {name:"拉特",     sizeMin:0.22, sizeMax:0.25, weightMin:2.93, weightMax:3.37, cat:"1.8-4"},
+  {name:"甜田螺",   sizeMin:0.20, sizeMax:0.20, weightMin:3.12, weightMax:3.16, cat:"1.8-4"},
+  {name:"吸泥鸥",   sizeMin:0.23, sizeMax:0.29, weightMin:3.55, weightMax:4.91, cat:"1.8-4"},
+  {name:"机械方方", sizeMin:0.22, sizeMax:0.22, weightMin:3.67, weightMax:3.67, cat:"1.8-4"},
+  {name:"小狮鹫",   sizeMin:0.31, sizeMax:0.33, weightMin:4.30, weightMax:4.92, cat:"4-14"},
+  {name:"治愈兔",   sizeMin:0.25, sizeMax:0.34, weightMin:4.33, weightMax:5.71, cat:"4-14"},
+  {name:"护主犬",   sizeMin:0.27, sizeMax:0.37, weightMin:4.85, weightMax:6.75, cat:"4-14"},
+  {name:"锥尾羊",   sizeMin:0.26, sizeMax:0.31, weightMin:4.92, weightMax:6.05, cat:"4-14"},
+  {name:"鸭吉吉",   sizeMin:0.30, sizeMax:0.39, weightMin:5.59, weightMax:6.94, cat:"4-14"},
+  {name:"多多",     sizeMin:0.21, sizeMax:0.25, weightMin:5.60, weightMax:6.84, cat:"4-14"},
+  {name:"风铃鲨",   sizeMin:0.20, sizeMax:0.24, weightMin:5.63, weightMax:6.45, cat:"4-14"},
+  {name:"胆小鳗鱼", sizeMin:0.33, sizeMax:0.39, weightMin:6.76, weightMax:8.94, cat:"4-14"},
+  {name:"白发懒人", sizeMin:0.31, sizeMax:0.43, weightMin:7.03, weightMax:9.31, cat:"4-14"},
+  {name:"布是石",   sizeMin:0.18, sizeMax:0.25, weightMin:7.10, weightMax:12.51,cat:"4-14"},
+  {name:"火尾瓦特", sizeMin:0.31, sizeMax:0.38, weightMin:7.14, weightMax:8.34, cat:"4-14"},
+  {name:"石肤蜥",   sizeMin:0.21, sizeMax:0.29, weightMin:7.67, weightMax:13.40,cat:"4-14"},
+  {name:"伊雷龙",   sizeMin:0.31, sizeMax:0.36, weightMin:9.59, weightMax:12.26,cat:"4-14"},
+  {name:"小星光",   sizeMin:0.33, sizeMax:0.42, weightMin:9.62, weightMax:12.93,cat:"4-14"},
+  {name:"幽影树",   sizeMin:0.28, sizeMax:0.36, weightMin:10.73,weightMax:14.03,cat:"4-14"},
+  {name:"水母",     sizeMin:0.21, sizeMax:0.28, weightMin:11.20,weightMax:14.24,cat:"4-14"},
+  {name:"电动长颈鹿",sizeMin:0.33, sizeMax:0.42, weightMin:11.58,weightMax:14.86,cat:"4-14"},
+  {name:"小独角兽", sizeMin:0.42, sizeMax:0.58, weightMin:14.55,weightMax:21.84,cat:"14+"},
+  {name:"里拉鳐",   sizeMin:0.41, sizeMax:0.46, weightMin:14.65,weightMax:19.20,cat:"14+"},
+  {name:"阿米亚特", sizeMin:0.28, sizeMax:0.46, weightMin:16.22,weightMax:19.15,cat:"14+"},
+  {name:"嘟嘟煲",   sizeMin:0.28, sizeMax:0.33, weightMin:17.45,weightMax:22.31,cat:"14+"},
+  {name:"锤头鹳",   sizeMin:0.47, sizeMax:0.63, weightMin:18.58,weightMax:25.36,cat:"14+"},
+  {name:"石石",     sizeMin:0.17, sizeMax:0.20, weightMin:24.53,weightMax:27.59,cat:"14+"},
+  {name:"海豹战士", sizeMin:0.28, sizeMax:0.38, weightMin:25.67,weightMax:34.48,cat:"14+"},
+  {name:"恶魔狼",   sizeMin:0.52, sizeMax:0.72, weightMin:26.00,weightMax:36.00,cat:"14+"},
+  {name:"记忆石",   sizeMin:0.43, sizeMax:0.58, weightMin:33.73,weightMax:44.33,cat:"14+"}
+];
+var WEIGHT_CATS = {"0-1":"🪶","1-1.8":"🍃","1.8-4":"🪨","4-14":"🔥","14+":"💎"};
+var WEIGHT_CAT_COLORS = {"0-1":"#81c784","1-1.8":"#4caf50","1.8-4":"#ffa726","4-14":"#ef5350","14+":"#e040fb"};
+
+// Test data from REAL hatching results (players measured egg then hatched)
+var EGG_TESTS = [
+  {size:0.275, weight:2.36, expected:"迪莫",   desc:"玩家实测：迪莫蛋中位数"},
+  {size:0.27,  weight:1.55, expected:"喵喵",   desc:"玩家实测：喵喵蛋中位数"},
+  {size:0.26,  weight:3.03, expected:"火花",   desc:"玩家实测：火花蛋中位数"},
+  {size:0.23,  weight:1.18, expected:"水蓝蓝", desc:"玩家实测：水蓝蓝蛋中位数"},
+  {size:0.155, weight:1.98, expected:"波波螺", desc:"玩家实测：波波螺蛋中位数"},
+  {size:0.31,  weight:11.7, expected:"小翼龙", desc:"玩家实测：小翼龙蛋"},
+  {size:0.44,  weight:4.16, expected:"雪豆丁", desc:"玩家实测：雪豆丁蛋"},
+  {size:0.505, weight:11.97,expected:"火红尾", desc:"玩家实测：火红尾蛋"},
+];
+
+// ===========================================================
+// EGG QUERY LOGIC
+// ===========================================================
+function renderEggQuickSelect() {
+  var presets = [
+    {label:"小体型轻蛋", size:0.18, weight:0.45},
+    {label:"中等体型蛋", size:0.22, weight:1.5},
+    {label:"中等偏重蛋", size:0.25, weight:3.0},
+    {label:"大体型蛋",   size:0.3,  weight:8.0},
+    {label:"大型重蛋",   size:0.45, weight:20},
+    {label:"超大型蛋",   size:0.5,  weight:30}
+  ];
+  var html = '';
+  presets.forEach(function(p){ html += '<div class="egg-chip" onclick="quickQuery('+p.size+','+p.weight+')">'+p.label+'</div>'; });
+  document.getElementById('eggQuickSelect').innerHTML = html;
+}
+
+function renderEggTestBlocks() {
+  var html = '';
+  EGG_TESTS.forEach(function(test){
+    html += '<div class="egg-test-block" onclick="quickQuery('+test.size+','+test.weight+')">'+
+      '<div class="tb-name">🥚 '+test.expected+'</div>'+
+      '<div class="tb-data">📏 '+test.size.toFixed(3)+'m  ⚖️ '+test.weight.toFixed(2)+'kg</div>'+
+      '<div class="tb-expect">预期: '+test.expected+'</div></div>';
+  });
+  document.getElementById('eggTestBlocks').innerHTML = html;
+}
+
+function calcMatchScore(size, weight, s) {
+  var sizeCenter = (s.sizeMin + s.sizeMax) / 2;
+  var sizeHalf = (s.sizeMax - s.sizeMin) / 2 || 0.001;
+  var weightCenter = (s.weightMin + s.weightMax) / 2;
+  var weightHalf = (s.weightMax - s.weightMin) / 2 || 0.001;
+  return (Math.max(0, 1 - Math.abs(size - sizeCenter) / sizeHalf) + Math.max(0, 1 - Math.abs(weight - weightCenter) / weightHalf)) / 2;
+}
+
+function queryEgg() {
+  var size = parseFloat(document.getElementById('eggSize').value);
+  var weight = parseFloat(document.getElementById('eggWeight').value);
+  if (isNaN(size)||isNaN(weight)||size<=0||weight<=0) { toast('请输入有效的尺寸和体重'); return; }
+  var matches = [];
+  for (var i=0; i<EGG_DATA.length; i++) {
+    var s = EGG_DATA[i];
+    // Hard filter: BOTH size AND weight must be within range
+    if (size>=s.sizeMin && size<=s.sizeMax && weight>=s.weightMin && weight<=s.weightMax) {
+      matches.push({spirit:s, score:calcMatchScore(size,weight,s)});
+    }
+  }
+  matches.sort(function(a,b){return b.score-a.score;});
+  renderEggResults(matches, size, weight);
+}
+
+function renderEggResults(matches, size, weight) {
+  var c = document.getElementById('eggResults');
+  if (matches.length===0) {
+    var closest = findClosest(size, weight, 5);
+    var html = '<div class="egg-no-result"><div class="icon">🔍</div><div class="msg">没有精确匹配的精灵<br><small>尺寸 '+size.toFixed(2)+'m · 体重 '+weight.toFixed(2)+'kg</small><br><small style="color:var(--orange)">📋 参数最接近的精灵（仅供参考）</small></div></div>';
+    if (closest.length>0) { html += '<div style="margin-top:16px">'; closest.forEach(function(cx,i){ html += buildCloseCard(cx,i); }); html += '</div>'; }
+    c.innerHTML = html; return;
+  }
+  var html = '<div class="egg-result-header">🥚 尺寸 <strong>'+size.toFixed(2)+'m</strong> · 体重 <strong>'+weight.toFixed(2)+'kg</strong> — 匹配到 <strong>'+matches.length+'</strong> 种可能</div>';
+  matches.forEach(function(m,j){
+    var s = m.spirit, pct = Math.round(m.score*100);
+    var color = pct>=85?'#4caf50':pct>=70?'#8bc34a':pct>=50?'#ffa726':pct>=30?'#ff7043':'#ef5350';
+    var imgHtml = spriteImg(s.name, s.attrs.split(',')[0]);
+    var isBest = j===0;
+    html += '<div class="egg-result-card'+(isBest?' best-match':'')+'">'+
+      '<div class="egg-result-top">'+
+        '<div class="egg-result-icon">'+imgHtml+'</div>'+
+        '<div class="egg-result-info">'+
+          '<div class="egg-result-name">'+esc(s.name)+(isBest?' ⭐':'')+(s.verified?' ✅':'')+'</div>'+
+          '<div class="egg-result-attr">'+esc(s.cat)+'kg 级别'+(s.verified?' · 已验证':'')+'</div>'+
+        '</div>'+
+      '</div>'+
+      '<div class="egg-match-bar-wrap"><div class="egg-match-bar" style="width:'+pct+'%;background:'+color+'"></div></div>'+
+      '<div style="display:flex;justify-content:space-between;align-items:center">'+
+        '<div class="egg-match-detail">📏 '+s.sizeMin.toFixed(2)+'~'+s.sizeMax.toFixed(2)+'m | ⚖️ '+s.weightMin.toFixed(3)+'~'+s.weightMax.toFixed(2)+'kg</div>'+
+        '<div class="egg-match-percent" style="color:'+color+'">'+pct+'%</div>'+
+      '</div></div>';
+  });
+  c.innerHTML = html;
+}
+
+function buildCloseCard(cx, i) {
+  var s = cx.spirit;
+  var imgHtml = spriteImg(s.name, s.attrs.split(',')[0]);
+  return '<div class="egg-result-card" style="opacity:'+Math.max(0.4,1-i*0.12)+'">'+
+    '<div class="egg-result-top">'+
+      '<div class="egg-result-icon">'+imgHtml+'</div>'+
+      '<div class="egg-result-info">'+
+        '<div class="egg-result-name">'+esc(s.name)+'</div>'+
+        '<div class="egg-result-attr">'+esc(s.cat)+'kg 级别 · '+cx.reason+'</div>'+
+      '</div>'+
+    '</div>'+
+    '<div class="egg-match-detail">📏 '+s.sizeMin.toFixed(2)+'~'+s.sizeMax.toFixed(2)+'m | ⚖️ '+s.weightMin.toFixed(3)+'~'+s.weightMax.toFixed(2)+'kg</div>'+
+  '</div>';
+}
+
+function findClosest(size, weight, count) {
+  var cands = [];
+  EGG_DATA.forEach(function(s){
+    var sizeDist=0, weightDist=0, reason='';
+    if (size<s.sizeMin){sizeDist=s.sizeMin-size;reason='尺寸偏小';}
+    else if(size>s.sizeMax){sizeDist=size-s.sizeMax;reason='尺寸偏大';}
+    if (weight<s.weightMin){weightDist=s.weightMin-weight;if(!reason)reason='体重偏轻';}
+    else if(weight>s.weightMax){weightDist=weight-s.weightMax;if(!reason)reason='体重偏重';}
+    if(sizeDist===0&&weightDist===0) return;
+    var sizeNorm=sizeDist/(s.sizeMax-s.sizeMin||0.01);
+    var weightNorm=weightDist/(s.weightMax-s.weightMin||0.01);
+    cands.push({spirit:s, dist:sizeNorm+weightNorm, reason:reason});
+  });
+  cands.sort(function(a,b){return a.dist-b.dist;});
+  return cands.slice(0,count);
+}
+
+function quickQuery(size, weight) {
+  document.getElementById('eggSize').value = size;
+  document.getElementById('eggWeight').value = weight;
+  queryEgg();
+}
+
+function runEggTests() {
+  var html = '';
+  var passCount = 0, failCount = 0, total = EGG_TESTS.length;
+  EGG_TESTS.forEach(function(test, idx) {
+    var matches = [];
+    for (var i = 0; i < EGG_DATA.length; i++) {
+      var s = EGG_DATA[i];
+      if (test.size >= s.sizeMin && test.size <= s.sizeMax && test.weight >= s.weightMin && test.weight <= s.weightMax) {
+        matches.push(s.name);
+      }
+    }
+    var found = matches.indexOf(test.expected) !== -1;
+    var verdict = found ? 'pass' : 'fail';
+    if (found) passCount++; else failCount++;
+    html += '<div class="egg-test-verdict '+verdict+'">'+
+      (found ? '✅' : '❌')+' <strong>#'+(idx+1)+' '+test.desc+'</strong><br>'+
+      '📏 '+test.size.toFixed(3)+'m  ⚖️ '+test.weight.toFixed(2)+'kg'+
+      ' → 期望: <strong>'+test.expected+'</strong>'+
+      (found ? ' → 实际匹配: '+matches.join(', ') : ' → <strong>未匹到！</strong>')+
+      (found ? '' : ' (可能匹配范围: '+(matches.length>0?matches.join(','):'无任何匹配')+')')+
+    '</div>';
+  });
+  html += '<div style="text-align:center;padding:10px;font-size:14px;font-weight:700;margin-bottom:8px;color:var(--gold)">'+
+    '🧪 测试结果: '+total+' 例中 <span style="color:var(--green)">'+passCount+' 通过</span>'+
+    (failCount>0 ? ' <span style="color:var(--red)">'+failCount+' 失败</span>' : '')+
+    ' (命中率 '+Math.round(passCount/total*100)+'%)'+
+    '</div>';
+  document.getElementById('eggResults').innerHTML = html;
+  document.getElementById('eggResults').scrollIntoView({behavior:'smooth'});
+}
+
+document.getElementById('eggSize').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('eggWeight').focus();});
+document.getElementById('eggWeight').addEventListener('keydown',function(e){if(e.key==='Enter')queryEgg();});
+
+// ===========================================================
+// SHINY TRACKER — Season Catalog + Persistent counter
+// ===========================================================
+var PITY_MAX = 80;
+
+function loadShiny() {
+  try {
+    // Try v5 first, then migrate from v4 if needed
+    var d = localStorage.getItem('luoke_shiny_v5');
+    if (d) return JSON.parse(d);
+    var old = localStorage.getItem('luoke_shiny_v4');
+    if (old) {
+      var data = JSON.parse(old);
+      // Migrate: add evos field from S1/S2_SHINY
+      var allShiny = S1_SHINY.concat(S2_SHINY);
+      Object.keys(data.pets||{}).forEach(function(k) {
+        if (!data.pets[k].evos) {
+          var found = allShiny.find(function(s){ return s.name===k; });
+          data.pets[k].evos = found&&found.evos ? found.evos : [];
+          data.pets[k].num = found ? found.num : 0;
+        }
+      });
+      saveShiny(data);
+      return data;
+    }
+  } catch(e) {}
+  return { pets:{}, history:[], openSeasons:{s2:true,s1:false} };
+}
+function saveShiny(data) { localStorage.setItem('luoke_shiny_v5', JSON.stringify(data)); }
+var shinyData = loadShiny();
+if (!shinyData.pets) shinyData.pets = {};
+if (!shinyData.history) shinyData.history = [];
+if (!shinyData.openSeasons) shinyData.openSeasons = {s2:true,s1:false};
+
+// --- Search dropdown (quick add) ---
+function renderShinyDropdown() {
+  var search = (document.getElementById('shinySearch').value || '').toLowerCase().trim();
+  var dd = document.getElementById('shinyDropdown');
+  if (!search || search.length < 1) { dd.classList.remove('show'); dd.innerHTML = ''; return; }
+  // Search all shiny-capable spirits (initial forms + evos)
+  var allShiny = [];
+  S1_SHINY.forEach(function(s){
+    allShiny.push(s);
+    (s.evos||[]).forEach(function(e){ allShiny.push({num:e.num, name:e.name, attrs:e.attrs}); });
+  });
+  S2_SHINY.forEach(function(s){
+    allShiny.push(s);
+    (s.evos||[]).forEach(function(e){ allShiny.push({num:e.num, name:e.name, attrs:e.attrs}); });
+  });
+  // Also include POKEDEX for full search
+  var allSpirits = allShiny.concat(POKEDEX.filter(function(p){ return !allShiny.find(function(s){ return s.num===p.num; }); }));
+  allSpirits = allSpirits.concat(S2_SPIRITS.filter(function(s2){ return !allSpirits.find(function(s){ return s.num===s2.num; }); }));
+  var filtered = allSpirits.filter(function(s) {
+    return s.name.toLowerCase().indexOf(search) !== -1 || String(s.num).indexOf(search) !== -1;
+  }).slice(0, 8);
+  if (filtered.length === 0) { dd.classList.remove('show'); dd.innerHTML = ''; return; }
+  var html = '';
+  filtered.forEach(function(s) {
+    var imgHtml = spriteImg(s.name, (s.attrs||'普通').split(',')[0]);
+    html += '<div class="shiny-dropdown-item" onclick="shinyAddPet(\''+esc(s.name)+'\', '+s.num+')">'+
+      '<div class="dd-img">'+imgHtml+'</div>'+
+      '<div class="dd-name">'+esc(s.name)+'</div>'+
+      '<div class="dd-attr">'+esc(s.attrs)+'</div></div>';
+  });
+  dd.innerHTML = html;
+  dd.classList.add('show');
+}
+
+// --- Season Catalog ---
+function toggleSeason(season) {
+  shinyData.openSeasons[season] = !shinyData.openSeasons[season];
+  saveShiny(shinyData);
+  renderShinyCatalog();
+}
+
+function renderShinyCatalog() {
+  var seasons = [
+    {id:'s2', label:'S2赛季', sub:'马戏奇缘 · 18只异色', icon:'🎪', list:S2_SHINY, range:'348-535'},
+    {id:'s1', label:'S1赛季', sub:'经典篇章 · 16只异色', icon:'🏰', list:S1_SHINY, range:'1-520'}
+  ];
+  var html = '';
+  seasons.forEach(function(sea) {
+    var isOpen = shinyData.openSeasons[sea.id];
+    var trackingCount = 0;
+    sea.list.forEach(function(s){ if (shinyData.pets[s.name] && shinyData.pets[s.name].count>0) trackingCount++; });
+    // Count total forms including evos
+    var totalForms = 0;
+    sea.list.forEach(function(s){ totalForms += 1 + (s.evos?s.evos.length:0); });
+    html += '<div class="season-section">'+
+      '<div class="season-header'+(isOpen?' open':'')+'" onclick="toggleSeason(\''+sea.id+'\')">'+
+        '<span class="season-icon">'+sea.icon+'</span>'+
+        '<div class="season-info">'+
+          '<div class="season-title">'+sea.label+' · '+sea.sub.split('·')[0].trim()+'</div>'+
+          '<div class="season-sub">'+sea.list.length+'种初始异色（共'+totalForms+'形态）'+(trackingCount>0?' · 已追踪'+trackingCount+'种':'')+'</div>'+
+        '</div>'+
+        '<span class="season-arrow">▼</span>'+
+      '</div>'+
+      '<div class="season-body'+(isOpen?' open':'')+'">'+
+        '<div class="shiny-catalog-grid">';
+    sea.list.forEach(function(s) {
+      var isTracking = shinyData.pets[s.name] && shinyData.pets[s.name].count > 0;
+      var imgHtml = spriteImg(s.name, s.attrs.split(',')[0]);
+      // Build evo chain labels
+      var evoLabel = '';
+      if (s.evos && s.evos.length) {
+        evoLabel = '<div class="ci-evo">→ ' + s.evos.map(function(e){ return esc(e.name); }).join(' → ')+'</div>';
+      }
+      html += '<div class="shiny-catalog-item'+(isTracking?' tracking':'')+'">'+
+        '<div class="ci-img">'+imgHtml+'</div>'+
+        '<div class="ci-name">'+esc(s.name)+'</div>'+
+        '<div class="ci-num">NO.'+String(s.num).padStart(3,'0')+'</div>'+
+        evoLabel+
+        (isTracking
+          ? '<div class="ci-btn tracked" onclick="shinyDeletePet(\''+esc(s.name)+'\')">✓ 追踪中</div>'
+          : '<div class="ci-btn add" onclick="shinyAddPet(\''+esc(s.name)+'\', '+s.num+')">+ 添加追踪</div>')+
+      '</div>';
+    });
+    html += '</div></div></div>';
+  });
+  document.getElementById('shinyCatalog').innerHTML = html;
+}
+
+// --- CRUD for tracking ---
+function shinyAddPet(name, num) {
+  if (shinyData.pets[name] && shinyData.pets[name].count > 0) {
+    toast('「'+name+'」已在追踪列表中');
+    return;
+  }
+  // Look up evolution chain from combined S1+S2 data
+  var allShiny = S1_SHINY.concat(S2_SHINY);
+  var found = allShiny.find(function(s){ return s.name===name; });
+  shinyData.pets[name] = {
+    name: name, num: num||(found?found.num:0), count: 0, shinyCount: 0,
+    evos: found&&found.evos ? found.evos : [],
+    lastCatch: null, createdAt: new Date().toISOString()
+  };
+  saveShiny(shinyData);
+  document.getElementById('shinySearch').value = '';
+  document.getElementById('shinyDropdown').classList.remove('show');
+  renderShiny();
+  toast('✅ 已添加「'+name+'」到追踪列表');
+}
+
+function shinyRecordCatch(name, gotShiny) {
+  if (!shinyData.pets[name]) return;
+  var p = shinyData.pets[name];
+  p.count = (p.count || 0) + 1;
+  p.lastCatch = new Date().toISOString();
+  if (gotShiny) {
+    p.shinyCount = (p.shinyCount || 0) + 1;
+    shinyData.history.push({ name: name, date: new Date().toISOString(), atCount: p.count });
+    toast('🎉 恭喜！「'+name+'」第'+p.count+'次出异色！');
+  }
+  saveShiny(shinyData);
+  renderShiny();
+}
+
+function shinyResetPet(name) {
+  if (!shinyData.pets[name]) return;
+  if (!confirm('确定要重置「'+name+'」的计数吗？\n出货记录会保留。')) return;
+  shinyData.pets[name].count = 0;
+  shinyData.pets[name].lastCatch = null;
+  saveShiny(shinyData);
+  renderShiny();
+  toast('已重置计数');
+}
+
+function shinyDeletePet(name) {
+  if (!shinyData.pets[name]) return;
+  if (!confirm('确定要删除「'+name+'」吗？\n出货记录仍会保留。')) return;
+  delete shinyData.pets[name];
+  saveShiny(shinyData);
+  renderShiny();
+  renderShinyCatalog();
+  toast('已删除');
+}
+
+function resetAllShiny() {
+  if (!confirm('⚠️ 确定要重置所有追踪数据吗？\n此操作不可恢复！')) return;
+  shinyData.pets = {};
+  shinyData.history = [];
+  saveShiny(shinyData);
+  renderShiny();
+  renderShinyCatalog();
+  toast('已重置全部数据');
+}
+
+// --- Main render ---
+function renderShiny() {
+  renderShinyCatalog();
+  renderShinyPets();
+  renderShinyHistory();
+}
+
+function renderShinyPets() {
+  var keys = Object.keys(shinyData.pets);
+  if (keys.length === 0) {
+    document.getElementById('shinyPets').innerHTML = '<div class="shiny-empty">还没有添加任何精灵<br>👆 点击下方精灵卡片来添加追踪</div>';
+    return;
+  }
+  var html = '';
+  keys.forEach(function(k) {
+    var p = shinyData.pets[k];
+    var count = p.count || 0;
+    var shinyCount = p.shinyCount || 0;
+    var pct = Math.min(100, Math.round(count / PITY_MAX * 100));
+    var barColor = count >= PITY_MAX ? '#fdd835' : 'var(--gold)';
+    var imgHtml = spriteImg(p.name, (p.attrs||'普通').split(',')[0]);
+    // Build evolution chain display
+    var evoHtml = '';
+    if (p.evos && p.evos.length > 0) {
+      var evoItems = [p].concat(p.evos);
+      evoHtml = '<div class="pet-evo-chain">';
+      evoItems.forEach(function(e, i) {
+        var eImgHtml = spriteImg(e.name, (e.attrs||'普通').split(',')[0]);
+        var arrow = i < evoItems.length-1 ? '<span class="evo-arrow">→</span>' : '';
+        evoHtml += '<div class="evo-step">'+
+          '<div class="evo-img">'+eImgHtml+'</div>'+
+          '<div class="evo-name">'+esc(e.name)+'</div>'+
+          '<div class="evo-num">NO.'+String(e.num||0).padStart(3,'0')+'</div>'+
+          '</div>'+arrow;
+      });
+      evoHtml += '</div>';
+    }
+    html += '<div class="shiny-pet-card">'+
+      '<div class="shiny-pet-header">'+
+        '<div class="pet-img">'+imgHtml+'</div>'+
+        '<div class="pet-info">'+
+          '<div class="pet-name">✨ '+esc(p.name)+'</div>'+
+          '<div class="pet-sub">最近捕捉: '+(p.lastCatch ? new Date(p.lastCatch).toLocaleDateString('zh-CN') : '尚未捕捉')+'</div>'+
+        '</div>'+
+        '<div class="pet-count">'+count+'</div>'+
+      '</div>'+
+      evoHtml+
+      '<div class="shiny-pet-bar-wrap"><div class="shiny-pet-bar" style="width:'+pct+'%;background:'+barColor+'"></div></div>'+
+      '<div style="font-size:11px;color:var(--text-dim);margin-bottom:8px">'+
+        '距保底还差 <strong>'+(PITY_MAX-count)+'</strong> 次 ('+pct+'%) | 已出异色: '+(p.shinyCount||0)+' 只'+
+      '</div>'+
+      '<div class="shiny-pet-actions">'+
+        '<button class="pet-btn catch-normal" onclick="shinyRecordCatch(\''+esc(p.name)+'\', false)">+1 没出</button>'+
+        '<button class="pet-btn catch-shiny" onclick="shinyRecordCatch(\''+esc(p.name)+'\', true)">✨ 出异色了！</button>'+
+        '<button class="pet-btn reset" onclick="shinyResetPet(\''+esc(p.name)+'\')">重置</button>'+
+        '<button class="pet-btn delete" onclick="shinyDeletePet(\''+esc(p.name)+'\')">删除</button>'+
+      '</div></div>';
+  });
+  var grandTotal = 0, grandShinies = 0;
+  keys.forEach(function(k) { grandTotal += (shinyData.pets[k].count||0); grandShinies += (shinyData.pets[k].shinyCount||0); });
+  html += '<div style="background:var(--bg-card);border-radius:12px;padding:14px;margin-top:12px;text-align:center">'+
+    '<div style="font-size:12px;color:var(--text-dim)">🎯 总捕捉次数</div>'+
+    '<div style="font-size:32px;font-weight:700;color:var(--gold)">'+grandTotal+'</div>'+
+    '<div style="font-size:12px;color:var(--text-dim)">✨ 累计异色: '+grandShinies+' 只 | 出货率: '+(grandTotal>0?(grandShinies/grandTotal*100).toFixed(1):'0')+'%</div>'+
+    '</div>';
+  document.getElementById('shinyPets').innerHTML = html;
+}
+
+function renderShinyHistory() {
+  var logs = shinyData.history || [];
+  if (logs.length === 0) {
+    document.getElementById('shinyHistory').innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-dim)">还没有异色出货记录</div>';
+    return;
+  }
+  var recent = logs.slice(-20).reverse();
+  var html = '';
+  recent.forEach(function(l) {
+    var date = new Date(l.date);
+    var dateStr = date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate();
+    var timeStr = String(date.getHours()).padStart(2,'0')+':'+String(date.getMinutes()).padStart(2,'0');
+    html += '<div class="shiny-history-item">'+
+      '<span class="hist-icon">✨</span>'+
+      '<span class="hist-name">'+esc(l.name)+'</span>'+
+      '<span class="hist-at">第'+l.atCount+'次出</span>'+
+      '<span class="hist-date">'+dateStr+' '+timeStr+'</span>'+
+    '</div>';
+  });
+  document.getElementById('shinyHistory').innerHTML = html;
+}
+
+// Close dropdown on outside click
+document.addEventListener('click', function(e) {
+  var dd = document.getElementById('shinyDropdown');
+  var input = document.getElementById('shinySearch');
+  if (dd && input && !input.contains(e.target) && !dd.contains(e.target)) {
+    dd.classList.remove('show');
+  }
+});
+
+// ===========================================================
+// MERCHANT LOGIC — jsDelivr CDN (GitHub Actions 每5分钟更新)
+// ===========================================================
+var JSDELIVR_URL = 'https://cdn.jsdelivr.net/gh/Qixinan0101/luoke-merchant@main/data/merchant.json';
+var RAW_GITHUB_URL = 'https://raw.githubusercontent.com/Qixinan0101/luoke-merchant/main/data/merchant.json';
+var merchantData = null, currentRound = null, countdownInterval = null;
+var CATEGORY_ICONS = {'炼金材料':'⚗️','精灵喂养材料':'🍎','血脉修改道具':'💊','精灵蛋':'🥚','炫彩蛋':'🌈','技能石材料':'💎','咕噜球':'⚽','特制咕噜球':'⚽','default':'📦'};
+
+function getBeijingNow() {
+  var now = new Date();
+  var offset = now.getTimezoneOffset() + 480;
+  return new Date(now.getTime() + offset * 60000);
+}
+function isMerchantActive() {
+  var h = getBeijingNow().getHours();
+  return h >= 8 && h < 24;
+}
+function getActiveRound() {
+  var h = getBeijingNow().getHours();
+  if (h>=8&&h<12) return 1; if (h>=12&&h<16) return 2;
+  if (h>=16&&h<20) return 3; if (h>=20&&h<24) return 4;
+  return null;
+}
+function getNextRoundStart() {
+  var bj = getBeijingNow();
+  var h = bj.getHours();
+  var nextHours = [8,12,16,20,32];
+  for (var i=0; i<nextHours.length; i++) {
+    if (h < nextHours[i]) {
+      var target = new Date(bj);
+      target.setHours(nextHours[i], 0, 0, 0);
+      return {target:target, roundName:i<4?'第'+(i+1)+'轮':'营业开始'};
+    }
+  }
+  var target = new Date(bj); target.setDate(target.getDate()+1); target.setHours(8,0,0,0);
+  return {target:target, roundName:'营业开始'};
+}
+
+function fetchWithTimeout(url, timeoutMs) {
+  var ctrl = new AbortController();
+  var timer = setTimeout(function(){ctrl.abort();}, timeoutMs);
+  return fetch(url, {signal:ctrl.signal}).finally(function(){clearTimeout(timer);});
+}
+
+async function fetchData() {
+  var fab = document.getElementById('refreshFab');
+  fab.classList.add('spinning');
+  var errors = [];
+
+  // Try 1: jsDelivr CDN (缓存，由 GitHub Actions 维护，稳定高速)
+  try {
+    var res = await fetchWithTimeout(JSDELIVR_URL + '?_=' + Date.now(), 8000);
+    if (res.ok) {
+      var json = await res.json();
+      if (json && json.rounds) {
+        merchantData = { data: json, source: 'jsdelivr' };
+        render();
+        fab.classList.remove('spinning');
+        return;
+      }
+    }
+    errors.push('CDN: ' + (res.ok ? 'no data' : 'HTTP ' + res.status));
+  } catch(e) { errors.push('CDN: ' + (e.name === 'AbortError' ? 'timeout' : e.message)); }
+
+  // Try 2: Raw GitHub (直连，兜底)
+  try {
+    var res2 = await fetchWithTimeout(RAW_GITHUB_URL + '?_=' + Date.now(), 6000);
+    if (res2.ok) {
+      var json2 = await res2.json();
+      if (json2 && json2.rounds) {
+        merchantData = { data: json2, source: 'raw' };
+        render();
+        fab.classList.remove('spinning');
+        return;
+      }
+    }
+    errors.push('GitHub: ' + (res2.ok ? 'no data' : 'HTTP ' + res2.status));
+  } catch(e) { errors.push('GitHub: ' + (e.name === 'AbortError' ? 'timeout' : e.message)); }
+
+  showError('数据加载失败<br><small>' + errors.join(' | ') + '</small>');
+  fab.classList.remove('spinning');
+}
+
+function showError(msg) {
+  document.getElementById('itemsSection').innerHTML = '<div class="no-items">⚠️ '+msg+'</div>';
+  document.getElementById('statusText').textContent = '数据获取失败';
+  document.getElementById('statusDot').classList.add('closed');
+}
+
+function render() {
+  if (!merchantData || !merchantData.data) return;
+  var d = merchantData.data;
+  var source = merchantData.source || 'unknown';
+  var active = isMerchantActive();
+  var ar = getActiveRound();
+  var sd = document.getElementById('statusDot');
+  sd.classList.remove('closed');
+  if (!active) {
+    document.getElementById('statusText').textContent = '商人休息中（00:00-08:00）';
+    sd.classList.add('closed');
+  } else if (ar) {
+    var rn = {1:'08:00-12:00',2:'12:00-16:00',3:'16:00-20:00',4:'20:00-24:00'};
+    document.getElementById('statusText').textContent = '营业中 · 第'+ar+'轮（'+rn[ar]+'）';
+  }
+  // Show data source and update time
+  var sourceLabel = source === 'jsdelivr' ? '📦 CDN' : (source === 'raw' ? '🔗 GitHub' : '');
+  if (d.fetchedAt) {
+    var ft = new Date(d.fetchedAt);
+    document.getElementById('updateTime').textContent = '更新于 '+
+      String(ft.getMonth()+1).padStart(2,'0')+'/'+String(ft.getDate()).padStart(2,'0')+' '+
+      String(ft.getHours()).padStart(2,'0')+':'+String(ft.getMinutes()).padStart(2,'0')+' ' + sourceLabel;
+  } else {
+    document.getElementById('updateTime').textContent = '刚刚更新 ' + sourceLabel;
+  }
+  renderCountdown(active, ar);
+  renderRoundTabsFromAPI(d, ar);
+  renderItemsFromAPI(d, active, ar);
+}
+
+function renderCountdown(active, ar) {
+  var timerEl = document.getElementById('countdownTimer');
+  var labelEl = document.getElementById('countdownLabel');
+  var nextEl = document.getElementById('nextRefresh');
+  stopCountdown();
+  if (!active) {
+    var bj = getBeijingNow();
+    var next8 = new Date(bj); next8.setHours(8,0,0,0);
+    if (bj.getHours()>=8) next8.setDate(next8.getDate()+1);
+    timerEl.classList.add('closed');
+    labelEl.textContent = '距下次营业';
+    nextEl.textContent = '明天 08:00 开始';
+    countdownInterval = setInterval(function(){
+      var diff = next8 - getBeijingNow();
+      if (diff<=0) { timerEl.textContent='商人已出现！'; timerEl.classList.remove('closed'); clearInterval(countdownInterval); fetchData(); return; }
+      var h=Math.floor(diff/3600000), m=Math.floor((diff%3600000)/60000), s=Math.floor((diff%60000)/1000);
+      timerEl.textContent = String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+    },1000);
+    return;
+  }
+  var next = getNextRoundStart();
+  timerEl.classList.remove('closed');
+  labelEl.textContent = '距'+next.roundName+'结束';
+  countdownInterval = setInterval(function(){
+    var diff = next.target - getBeijingNow();
+    if (diff<=0) { timerEl.textContent='刷新中...'; clearInterval(countdownInterval); fetchData(); return; }
+    var h=Math.floor(diff/3600000), m=Math.floor((diff%3600000)/60000), s=Math.floor((diff%60000)/1000);
+    timerEl.textContent = String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+    nextEl.textContent = '下一轮刷新：'+String(next.target.getHours()).padStart(2,'0')+':00';
+  },1000);
+}
+
+function stopCountdown() { if (countdownInterval) { clearInterval(countdownInterval); countdownInterval=null; } }
+
+function renderRoundTabsFromAPI(d, ar) {
+  var c = document.getElementById('roundTabs');
+  var apiRound = d.round || ar || 1;
+  if (currentRound === null) currentRound = apiRound;
+  var rn = {1:'第1轮 08:00',2:'第2轮 12:00',3:'第3轮 16:00',4:'第4轮 20:00'};
+  var rt = {1:'08:00-12:00',2:'12:00-16:00',3:'16:00-20:00',4:'20:00-24:00'};
+  var html = '';
+  for (var r=1; r<=4; r++) {
+    var itemCount = (d.rounds && d.rounds[String(r)]) ? d.rounds[String(r)].length : 0;
+    var countText = itemCount > 0 ? itemCount+'件' : '';
+    html += '<div class="round-tab'+(r===currentRound?' active':'')+'" data-round="'+r+'" onclick="switchRound('+r+')">'+
+      '<div>'+rn[r]+'</div><div class="tab-time">'+countText+(r===apiRound?' • 当前轮':'')+'</div></div>';
+  }
+  c.innerHTML = html;
+}
+
+function switchRound(r) {
+  currentRound = parseInt(r);
+  document.querySelectorAll('.round-tab').forEach(function(tab){ tab.classList.toggle('active', parseInt(tab.dataset.round)===currentRound); });
+  if (merchantData && merchantData.data) renderItemsFromAPI(merchantData.data, isMerchantActive(), currentRound);
+}
+
+function renderItemsFromAPI(d, active, ar) {
+  var c = document.getElementById('itemsSection');
+  if (!active) {
+    c.innerHTML = '<div class="closed-overlay"><div class="closed-icon">🌙</div><div class="closed-text">远行商人休息中<br>每日 08:00-24:00 营业<br>一天4轮：08:00/12:00/16:00/20:00</div></div>';
+    return;
+  }
+  // 按选中轮次取商品，无指定则取当前轮
+  var items = (ar && d.rounds && d.rounds[String(ar)]) ? d.rounds[String(ar)] : (d.items || []);
+  if (!items || items.length === 0) {
+    var roundLabel = ar ? '第'+ar+'轮' : '当前轮';
+    c.innerHTML = '<div class="no-items">⏳ '+roundLabel+'商品数据尚未更新<br><small>正在从 onebiji.com 获取...</small></div>';
+    return;
+  }
+  var rLabel = '';
+  if (ar) { var rn = {1:'08:00',2:'12:00',3:'16:00',4:'20:00'}; rLabel = '第'+ar+'轮 · '+rn[ar]+' 刷新'; }
+  var sourceLabel = merchantData && merchantData.source === 'onebiji' ? '⚡ 实时抓取' : '📦 缓存数据';
+  var html = '<div class="round-title">'+rLabel+'<span class="time">'+ (d.subtitle||'') +'</span>'+
+    '<span class="meta-api-src">'+sourceLabel+'</span></div>';
+  items.forEach(function(item){
+    var icon = CATEGORY_ICONS[item.category]||CATEGORY_ICONS['default'];
+    var price = item.price || item.priceRaw || '?';
+    var imgHtml = item.image
+      ? '<div class="item-img"><img src="'+item.image+'" alt="'+esc(item.name)+'" onerror="this.parentElement.innerHTML=\''+icon+'\'"></div>'
+      : '<div class="item-img">'+icon+'</div>';
+    html += '<div class="item-card">'+imgHtml+
+      '<div class="item-info"><div class="item-name">'+esc(item.name)+'</div>'+
+        '<div class="item-category">'+esc(item.category||'')+'</div>'+
+        '<div class="item-meta"><span class="meta-price">💰 '+esc(String(price))+'</span><span class="meta-limit">📦 限购 '+esc(String(item.limit||'?'))+'</span></div>'+
+      '</div></div>';
+  });
+  c.innerHTML = html;
+}
+
+// ===========================================================
+// EVENTS DATA
+// ===========================================================
+var EVENTS = [
+  {title:"S2赛季「狂欢怪谈」", date:"2026年5月21日 - 7月15日", desc:"洛克马戏团主题赛季正式开启！新地图彼得大道马戏团上线，全新传说精灵「机幕方舟」登场。完成赛季作业第一章即可领取精灵蛋。赛季奇遇升级为「幸运惊喜盒」机制，连续捕捉触发魔力波动解锁盲盒。", tags:["🔥 进行中","🆕 新赛季"], tagClasses:["active-tag","new-tag"]},
+  {title:"8只马戏团主题奇遇精灵", date:"S2赛季限定", desc:"S2赛季专属奇遇精灵：小皮球、气球猫、帅帅魔偶、牵线木偶、红丝绒、红绒十字、卡拉波斯、帽兜娃娃。赛季专属道具「马戏团徽章」为进化关键，错过赛季将无法获取。", tags:["🆕 限定"], tagClasses:["new-tag"]},
+  {title:"2只战令限定精灵", date:"S2赛季限定", desc:"战令限定精灵：雪怪（草+冰）、爆焰喷喷（火+龙）。通过赛季战令获取，具有独特的外观和技能。", tags:["🆕 限定"], tagClasses:["new-tag"]},
+  {title:"幸运惊喜盒机制", date:"S2赛季新玩法", desc:"取代原有污染机制的新奇遇系统。在彼得大道马戏团及野外地图通过连续捕捉精灵触发魔力波动，解锁盲盒。内含8只马戏团主题奇遇精灵及珍贵异色形态。", tags:["🎮 新玩法"], tagClasses:["active-tag"]},
+  {title:"异色保底80次机制", date:"长期有效", desc:"基础出货概率约1.8%，累计80次污染必定保底出异色精灵。不同精灵独立计数，提前出异色消耗保底次数但不重置。推荐优先刷幽系（固定空空颅）和水系（固定双灯鱼）。", tags:["📋 攻略"], tagClasses:[]},
+  {title:"奇遇果实系统上线", date:"2026年4月17日更新", desc:"各奇遇精灵都有固定种子可进行家族捕捉。除月牙雪熊外，其他奇遇果实均只出现最低阶形态（16星光/1200洛克币）。刷取策略：系别池优先→奇遇果实补缺。", tags:["📋 攻略"], tagClasses:[]}
+];
+
+function renderEvents() {
+  var html = '';
+  EVENTS.forEach(function(e){
+    var tagHtml = '';
+    e.tags.forEach(function(t,i){ var cls = e.tagClasses[i]||''; tagHtml += '<span class="event-tag'+(cls?' '+cls:'')+'">'+t+'</span>'; });
+    html += '<div class="event-card">'+
+      '<div class="event-title">'+esc(e.title)+'</div>'+
+      '<div class="event-date">📅 '+esc(e.date)+'</div>'+
+      '<div class="event-desc">'+esc(e.desc)+'</div>'+
+      '<div style="margin-top:6px">'+tagHtml+'</div>'+
+    '</div>';
+  });
+  document.getElementById('eventsContent').innerHTML = html;
+}
+
+// ===========================================================
+// INIT
+// ===========================================================
+renderEggQuickSelect();
+renderEggTestBlocks();
+document.getElementById('refreshFab').addEventListener('click', fetchData);
+setInterval(fetchData, 60000);  // Refresh every 60s
+fetchData();
+</script>
+</body>
+</html>
