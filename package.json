@@ -1,0 +1,23 @@
+{
+  "name": "luoke-merchant",
+  "version": "1.0.0",
+  "description": "洛克王国世界 · 远行商人每日商品记录",
+  "main": "index.html",
+  "scripts": {
+    "sync": "npx cap sync",
+    "open": "npx cap open android",
+    "build": "cd android && gradlew assembleDebug"
+  },
+  "keywords": [
+    "luoke",
+    "merchant",
+    "game"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@capacitor/android": "^5.7.8",
+    "@capacitor/cli": "^5.7.8",
+    "@capacitor/core": "^5.7.8"
+  }
+}
