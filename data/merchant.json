@@ -1,12 +1,12 @@
 {
   "sourceUrl": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
   "sourceName": "好游快爆远行商人工具",
-  "fetchedAt": "2026-06-06T09:14:00.439902+00:00",
+  "fetchedAt": "2026-06-06T14:55:56.968740+00:00",
   "timezone": "Asia/Shanghai",
   "status": "open",
-  "round": 3,
-  "roundLabel": "16:00-20:00",
-  "nextRefreshBeijing": "2026-06-06 20:00:00",
+  "round": 4,
+  "roundLabel": "20:00-24:00",
+  "nextRefreshBeijing": "2026-06-07 08:00:00",
   "rounds": {
     "1": [
       {
@@ -46,15 +46,6 @@
         "image": "https://img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_d3f07a7c316e2b71dc3e5fc1871bd6da.png",
         "category": "精灵蛋",
         "description": "蕴含着难以捉摸的魔力，必定孵化出“炫彩”外观、“了不起”天分的精灵。",
-        "timestamp": 1780747200
-      },
-      {
-        "name": "魔力果",
-        "price": "6000",
-        "limit": "20",
-        "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
-        "category": "精灵喂养材料",
-        "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
         "timestamp": 1780747200
       },
       {
@@ -103,6 +94,24 @@
         "category": "个体资质增强道具",
         "description": "对初始个体资质小于10的精灵使用，使该项个体资质的初始值增加1。",
         "timestamp": 1780848000
+      },
+      {
+        "name": "魔力果",
+        "price": "6000",
+        "limit": "20",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
+        "category": "精灵喂养材料",
+        "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
+        "timestamp": 1780761600
+      },
+      {
+        "name": "幻系血脉秘药",
+        "price": "16w",
+        "limit": "3",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/f/f5/osnobm6foxcvyf5t5304fz3ozr2w8cp.png/100px-Xuemai_huan.png",
+        "category": "血脉修改道具",
+        "description": "能唤醒血脉力量的远古秘药，使精灵获得幻系血脉。 “一段失落的秘密将被重拾。”",
+        "timestamp": 1780761600
       }
     ]
   }
