@@ -1,12 +1,12 @@
 {
   "sourceUrl": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
   "sourceName": "好游快爆远行商人工具",
-  "fetchedAt": "2026-06-07T10:14:34.217748+00:00",
+  "fetchedAt": "2026-06-07T15:45:32.797677+00:00",
   "timezone": "Asia/Shanghai",
   "status": "open",
-  "round": 3,
-  "roundLabel": "16:00-20:00",
-  "nextRefreshBeijing": "2026-06-07 20:00:00",
+  "round": 4,
+  "roundLabel": "20:00-24:00",
+  "nextRefreshBeijing": "2026-06-08 08:00:00",
   "rounds": {
     "1": [
       {
@@ -20,15 +20,6 @@
       }
     ],
     "2": [
-      {
-        "name": "魔力果",
-        "price": "6000",
-        "limit": "20",
-        "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
-        "category": "精灵喂养材料",
-        "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
-        "timestamp": 1780819200
-      },
       {
         "name": "草系粉尘",
         "price": "500",
@@ -51,6 +42,24 @@
       }
     ],
     "4": [
+      {
+        "name": "国王球",
+        "price": "16w",
+        "limit": "3",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/2e/jygbfxpdbup5weqy4zaqnyaw2fcfyrq.png/100px-100255.png",
+        "category": "咕噜球",
+        "description": "昂贵且好用的咕噜球，能十分轻易地捕捉精灵，并能提升精灵的天分。 曾经专供贵族使用，制作方法不明。",
+        "timestamp": 1780848000
+      },
+      {
+        "name": "紫莲刚玉",
+        "price": "1000",
+        "limit": "100",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/9c/s7ej54xr4magmv0h0zag15jah6avwlc.png/100px-100682.png",
+        "category": "炼金材料",
+        "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 紫雀花王朝的贵族相信这是复活与不朽的象征，常常将紫莲刚玉制作成护身符随身携带。",
+        "timestamp": 1780848000
+      },
       {
         "name": "残缺魔镜",
         "price": "48w",
@@ -76,6 +85,15 @@
         "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/2d/749ek9zbh79fvll7f5vtpxa33dz3mze.png/100px-100009.png",
         "category": "个体资质增强道具",
         "description": "对初始个体资质小于10的精灵使用，使该项个体资质的初始值增加1。",
+        "timestamp": 1780848000
+      },
+      {
+        "name": "魔力果",
+        "price": "6000",
+        "limit": "20",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
+        "category": "精灵喂养材料",
+        "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
         "timestamp": 1780848000
       }
     ]
