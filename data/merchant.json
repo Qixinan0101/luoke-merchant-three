@@ -1,12 +1,12 @@
 {
   "sourceUrl": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
   "sourceName": "好游快爆远行商人工具",
-  "fetchedAt": "2026-06-13T10:13:37.776254+00:00",
+  "fetchedAt": "2026-06-13T15:53:56.168173+00:00",
   "timezone": "Asia/Shanghai",
   "status": "open",
-  "round": 3,
-  "roundLabel": "16:00-20:00",
-  "nextRefreshBeijing": "2026-06-13 20:00:00",
+  "round": 4,
+  "roundLabel": "20:00-24:00",
+  "nextRefreshBeijing": "2026-06-14 08:00:00",
   "rounds": {
     "1": [
       {
@@ -112,6 +112,24 @@
         "image": "https://patchwiki.biligame.com/images/rocom/thumb/5/5a/hif6470l7ojdexwm72t9brp0f0x3h4x.png/100px-Img_daodanqiu.png",
         "category": "特制咕噜球",
         "description": "更适合用来捕捉幽系、恶系精灵。 爱捉弄的球，喜欢偷袭精灵。",
+        "timestamp": 1781366400
+      },
+      {
+        "name": "魔力果",
+        "price": "6000",
+        "limit": "20",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
+        "category": "精灵喂养材料",
+        "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
+        "timestamp": 1781366400
+      },
+      {
+        "name": "萌系粉尘",
+        "price": "500",
+        "limit": "100",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/26/58llleh28pa33kxom2cub80nnf0y9zd.png/100px-100137.png",
+        "category": "炼金材料",
+        "description": "常见的炼金材料，蕴含少量萌系魔法，是合成技能石的主要触媒。",
         "timestamp": 1781366400
       }
     ]
