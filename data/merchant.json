@@ -1,12 +1,12 @@
 {
   "sourceUrl": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
   "sourceName": "好游快爆远行商人工具",
-  "fetchedAt": "2026-06-14T10:54:01.857711+00:00",
+  "fetchedAt": "2026-06-14T16:13:34.913422+00:00",
   "timezone": "Asia/Shanghai",
-  "status": "open",
-  "round": 3,
-  "roundLabel": "16:00-20:00",
-  "nextRefreshBeijing": "2026-06-14 20:00:00",
+  "status": "closed",
+  "round": null,
+  "roundLabel": "休市中",
+  "nextRefreshBeijing": "2026-06-16 08:00:00",
   "rounds": {
     "1": [],
     "2": [
