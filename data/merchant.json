@@ -1,12 +1,12 @@
 {
   "sourceUrl": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
   "sourceName": "好游快爆远行商人工具",
-  "fetchedAt": "2026-06-27T06:17:17.446739+00:00",
+  "fetchedAt": "2026-06-27T09:07:24.183463+00:00",
   "timezone": "Asia/Shanghai",
   "status": "open",
-  "round": 2,
-  "roundLabel": "12:00-16:00",
-  "nextRefreshBeijing": "2026-06-27 16:00:00",
+  "round": 3,
+  "roundLabel": "16:00-20:00",
+  "nextRefreshBeijing": "2026-06-27 20:00:00",
   "rounds": {
     "1": [
       {
@@ -16,15 +16,6 @@
         "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/bc/khe20j8lwkt1bg9g4b0gbnsff48g93c.png/100px-100628.png",
         "category": "炼金材料",
         "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 “我的阿米亚特说这玩意儿太香了，嚼起来有些呛口，像火山灰，有纯正的拉布朗矿山味道。”",
-        "timestamp": 1782532800
-      },
-      {
-        "name": "黄石榴石",
-        "price": "1000",
-        "limit": "100",
-        "image": "https://patchwiki.biligame.com/images/rocom/thumb/f/f3/c5x5f0lgk33ly801m8w1n9aod8ny4sh.png/100px-100683.png",
-        "category": "炼金材料",
-        "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 特殊的晶体排列解构，精灵打喷嚏可能会令这种晶体发生爆炸。",
         "timestamp": 1782532800
       },
       {
@@ -57,7 +48,17 @@
         "timestamp": 1782547200
       }
     ],
-    "3": [],
+    "3": [
+      {
+        "name": "黄石榴石",
+        "price": "1000",
+        "limit": "100",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/f/f3/c5x5f0lgk33ly801m8w1n9aod8ny4sh.png/100px-100683.png",
+        "category": "炼金材料",
+        "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 特殊的晶体排列解构，精灵打喷嚏可能会令这种晶体发生爆炸。",
+        "timestamp": 1782561600
+      }
+    ],
     "4": [
       {
         "name": "残缺魔镜",
