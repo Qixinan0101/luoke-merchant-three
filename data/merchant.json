@@ -1,7 +1,7 @@
 {
   "sourceUrl": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
   "sourceName": "好游快爆远行商人工具",
-  "fetchedAt": "2026-06-28T14:03:31.731597+00:00",
+  "fetchedAt": "2026-06-28T15:36:28.957294+00:00",
   "timezone": "Asia/Shanghai",
   "status": "open",
   "round": 4,
@@ -50,15 +50,6 @@
     ],
     "3": [
       {
-        "name": "美妙球",
-        "price": "3000",
-        "limit": "200",
-        "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/b0/6ywvdkywqprqvws7m4ogeldp9y19swt.png/100px-Img_haihaiqiu.png",
-        "category": "特制咕噜球",
-        "description": "更适合用来捕捉萌系、普通系的精灵。 活泼的球，开心的精灵会被吸引。",
-        "timestamp": 1782648000
-      },
-      {
         "name": "黑晶琉璃",
         "price": "1000",
         "limit": "100",
@@ -94,6 +85,15 @@
         "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/2d/749ek9zbh79fvll7f5vtpxa33dz3mze.png/100px-100009.png",
         "category": "个体资质增强道具",
         "description": "对初始个体资质小于10的精灵使用，使该项个体资质的初始值增加1。",
+        "timestamp": 1782662400
+      },
+      {
+        "name": "美妙球",
+        "price": "3000",
+        "limit": "200",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/b0/6ywvdkywqprqvws7m4ogeldp9y19swt.png/100px-Img_haihaiqiu.png",
+        "category": "特制咕噜球",
+        "description": "更适合用来捕捉萌系、普通系的精灵。 活泼的球，开心的精灵会被吸引。",
         "timestamp": 1782662400
       },
       {
