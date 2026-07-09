@@ -1,12 +1,12 @@
 {
   "sourceUrl": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
   "sourceName": "好游快爆远行商人工具",
-  "fetchedAt": "2026-07-09T06:33:08.296782+00:00",
+  "fetchedAt": "2026-07-09T10:04:24.292573+00:00",
   "timezone": "Asia/Shanghai",
   "status": "open",
-  "round": 2,
-  "roundLabel": "12:00-16:00",
-  "nextRefreshBeijing": "2026-07-09 16:00:00",
+  "round": 3,
+  "roundLabel": "16:00-20:00",
+  "nextRefreshBeijing": "2026-07-09 20:00:00",
   "rounds": {
     "1": [
       {
@@ -26,15 +26,6 @@
         "category": "炼金材料",
         "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 某些晶石蜗会产出珍贵的粉蓝色碧玺，为此商人翻着花样研究晶石蜗的食谱喜好。",
         "timestamp": 1783569600
-      },
-      {
-        "name": "魔力果",
-        "price": "6000",
-        "limit": "20",
-        "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
-        "category": "精灵喂养材料",
-        "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
-        "timestamp": 1783569600
       }
     ],
     "2": [
@@ -48,7 +39,17 @@
         "timestamp": 1783584000
       }
     ],
-    "3": [],
+    "3": [
+      {
+        "name": "魔力果",
+        "price": "6000",
+        "limit": "20",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
+        "category": "精灵喂养材料",
+        "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
+        "timestamp": 1783598400
+      }
+    ],
     "4": []
   }
 }
