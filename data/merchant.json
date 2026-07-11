@@ -1,12 +1,12 @@
 {
   "sourceUrl": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
   "sourceName": "好游快爆远行商人工具",
-  "fetchedAt": "2026-07-11T07:23:33.808015+00:00",
+  "fetchedAt": "2026-07-11T09:06:36.781519+00:00",
   "timezone": "Asia/Shanghai",
   "status": "open",
-  "round": 2,
-  "roundLabel": "12:00-16:00",
-  "nextRefreshBeijing": "2026-07-11 16:00:00",
+  "round": 3,
+  "roundLabel": "16:00-20:00",
+  "nextRefreshBeijing": "2026-07-11 20:00:00",
   "rounds": {
     "1": [
       {
@@ -39,7 +39,26 @@
         "timestamp": 1783756800
       }
     ],
-    "3": [],
+    "3": [
+      {
+        "name": "光系粉尘",
+        "price": "500",
+        "limit": "100",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/9d/t3udkq5fg8o3je088pcjktersn9wfrt.png/100px-100124.png",
+        "category": "炼金材料",
+        "description": "常见的炼金材料，蕴含少量光系魔法，是合成技能石的主要触媒。",
+        "timestamp": 1783771200
+      },
+      {
+        "name": "武系粉尘",
+        "price": "500",
+        "limit": "100",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/23/su3uy9wfjwvx3ifjaia3l88j2kjr5mg.png/100px-100135.png",
+        "category": "炼金材料",
+        "description": "常见的炼金材料，蕴含少量武系魔法，是合成技能石的主要触媒。",
+        "timestamp": 1783771200
+      }
+    ],
     "4": [
       {
         "name": "残缺魔镜",
