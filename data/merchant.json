@@ -1,12 +1,12 @@
 {
   "sourceUrl": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
   "sourceName": "好游快爆远行商人工具",
-  "fetchedAt": "2026-08-02T11:13:32.425166+00:00",
+  "fetchedAt": "2026-08-02T12:16:16.024951+00:00",
   "timezone": "Asia/Shanghai",
   "status": "open",
-  "round": 3,
-  "roundLabel": "16:00-20:00",
-  "nextRefreshBeijing": "2026-08-02 20:00:00",
+  "round": 4,
+  "roundLabel": "20:00-24:00",
+  "nextRefreshBeijing": "2026-08-03 08:00:00",
   "rounds": {
     "1": [
       {
@@ -121,6 +121,33 @@
         "image": "https://patchwiki.biligame.com/images/rocom/thumb/d/d5/i0k2vx3nsjzsbbpfzfbwf3dlin3ixn0.png/100px-Img_guangheqiu.png",
         "category": "特制咕噜球",
         "description": "更适合用来捕捉草系、光系精灵。 青草味道的球。",
+        "timestamp": 1785686400
+      },
+      {
+        "name": "炫彩蛋",
+        "price": "160w",
+        "limit": "1",
+        "image": "https://img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_d3f07a7c316e2b71dc3e5fc1871bd6da.png",
+        "category": "精灵蛋",
+        "description": "蕴含着难以捉摸的魔力，必定孵化出“炫彩”外观、“了不起”天分的精灵。",
+        "timestamp": 1785686400
+      },
+      {
+        "name": "普通血脉秘药",
+        "price": "16w",
+        "limit": "3",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/a/a8/lx9q220586a1qpy109sy34ghfgtrs6w.png/100px-Xuemai_putong.png",
+        "category": "血脉修改道具",
+        "description": "能唤醒血脉力量的远古秘药，使精灵获得普通系血脉。 “一段失落的秘密将被重拾。”",
+        "timestamp": 1785686400
+      },
+      {
+        "name": "虫系粉尘",
+        "price": "500",
+        "limit": "100",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c0/ihsb7b9pcs210dtaiswlsaxuhe2jfaa.png/100px-100134.png",
+        "category": "炼金材料",
+        "description": "常见的炼金材料，蕴含少量虫系魔法，是合成技能石的主要触媒。",
         "timestamp": 1785686400
       }
     ]
