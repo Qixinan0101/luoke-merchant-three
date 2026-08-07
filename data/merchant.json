@@ -1,12 +1,12 @@
 {
   "sourceUrl": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
   "sourceName": "好游快爆远行商人工具",
-  "fetchedAt": "2026-08-07T02:27:55.366736+00:00",
+  "fetchedAt": "2026-08-07T04:36:02.309180+00:00",
   "timezone": "Asia/Shanghai",
   "status": "open",
-  "round": 1,
-  "roundLabel": "08:00-12:00",
-  "nextRefreshBeijing": "2026-08-07 12:00:00",
+  "round": 2,
+  "roundLabel": "12:00-16:00",
+  "nextRefreshBeijing": "2026-08-07 16:00:00",
   "rounds": {
     "1": [
       {
@@ -37,7 +37,17 @@
         "timestamp": 1786075200
       }
     ],
-    "2": [],
+    "2": [
+      {
+        "name": "萌系血脉秘药",
+        "price": "16w",
+        "limit": "3",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/a/a9/f93cxq6r5qxkkt6cs8hc2jaecsj3yy9.png/100px-Xuemai_meng.png",
+        "category": "血脉修改道具",
+        "description": "能唤醒血脉力量的远古秘药，使精灵获得萌系血脉。 “一段失落的秘密将被重拾。”",
+        "timestamp": 1786089600
+      }
+    ],
     "3": [],
     "4": [
       {
