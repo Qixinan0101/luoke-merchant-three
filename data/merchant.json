@@ -1,12 +1,12 @@
 {
   "sourceUrl": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
   "sourceName": "好游快爆远行商人工具",
-  "fetchedAt": "2026-08-08T17:13:52.863209+00:00",
+  "fetchedAt": "2026-08-09T01:20:53.310232+00:00",
   "timezone": "Asia/Shanghai",
-  "status": "closed",
-  "round": null,
-  "roundLabel": "休市中",
-  "nextRefreshBeijing": "2026-08-10 08:00:00",
+  "status": "open",
+  "round": 1,
+  "roundLabel": "08:00-12:00",
+  "nextRefreshBeijing": "2026-08-09 12:00:00",
   "rounds": {
     "1": [
       {
@@ -16,58 +16,29 @@
         "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/bc/khe20j8lwkt1bg9g4b0gbnsff48g93c.png/100px-100628.png",
         "category": "炼金材料",
         "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 “我的阿米亚特说这玩意儿太香了，嚼起来有些呛口，像火山灰，有纯正的拉布朗矿山味道。”",
-        "timestamp": 1786161600
+        "timestamp": 1786248000
       },
       {
-        "name": "黄石榴石",
-        "price": "1000",
-        "limit": "100",
-        "image": "https://patchwiki.biligame.com/images/rocom/thumb/f/f3/c5x5f0lgk33ly801m8w1n9aod8ny4sh.png/100px-100683.png",
-        "category": "炼金材料",
-        "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 特殊的晶体排列解构，精灵打喷嚏可能会令这种晶体发生爆炸。",
-        "timestamp": 1786161600
-      }
-    ],
-    "2": [
-      {
-        "name": "黑晶琉璃",
-        "price": "1000",
-        "limit": "100",
-        "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/bc/khe20j8lwkt1bg9g4b0gbnsff48g93c.png/100px-100628.png",
-        "category": "炼金材料",
-        "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 “我的阿米亚特说这玩意儿太香了，嚼起来有些呛口，像火山灰，有纯正的拉布朗矿山味道。”",
-        "timestamp": 1786176000
-      },
-      {
-        "name": "紫莲刚玉",
-        "price": "1000",
-        "limit": "100",
-        "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/9c/s7ej54xr4magmv0h0zag15jah6avwlc.png/100px-100682.png",
-        "category": "炼金材料",
-        "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 紫雀花王朝的贵族相信这是复活与不朽的象征，常常将紫莲刚玉制作成护身符随身携带。",
-        "timestamp": 1786176000
-      },
-      {
-        "name": "恶系粉尘",
+        "name": "冰系粉尘",
         "price": "500",
         "limit": "100",
-        "image": "https://patchwiki.biligame.com/images/rocom/thumb/e/ec/mbugzr13ol6m9ay5focjw9kctt14g5h.png/100px-100125.png",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/a/a9/no0rhm0wky3e406wni3ef13z6zvfxw1.png/100px-100130.png",
         "category": "炼金材料",
-        "description": "常见的炼金材料，蕴含少量恶系魔法，是合成技能石的主要触媒。",
-        "timestamp": 1786176000
-      }
-    ],
-    "3": [
+        "description": "常见的炼金材料，蕴含少量冰系魔法，是合成技能石的主要触媒。",
+        "timestamp": 1786248000
+      },
       {
-        "name": "萌系粉尘",
+        "name": "幻系粉尘",
         "price": "500",
         "limit": "100",
-        "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/26/58llleh28pa33kxom2cub80nnf0y9zd.png/100px-100137.png",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/24/sgt0lc5llwfvlcmjhr1awhwq6st35fj.png/100px-100139.png",
         "category": "炼金材料",
-        "description": "常见的炼金材料，蕴含少量萌系魔法，是合成技能石的主要触媒。",
-        "timestamp": 1786190400
+        "description": "常见的炼金材料，蕴含少量幻系魔法，是合成技能石的主要触媒。",
+        "timestamp": 1786248000
       }
     ],
+    "2": [],
+    "3": [],
     "4": [
       {
         "name": "残缺魔镜",
@@ -103,16 +74,7 @@
         "image": "https://patchwiki.biligame.com/images/rocom/thumb/0/0d/2fx8i8qxb62s1sj8dn08h9vhsnsim1t.png/100px-Img_tiaowenqiu.png",
         "category": "特制咕噜球",
         "description": "更适合用来捕捉火系、冰系精灵。 受热不均的球。",
-        "timestamp": 1786204800
-      },
-      {
-        "name": "神奇的蛋",
-        "price": "36000",
-        "limit": "5",
-        "image": "https://img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
-        "category": "精灵蛋",
-        "description": "蕴含着难以捉摸的魔力，不知道可以孵化出哪种精灵。",
-        "timestamp": 1786204800
+        "timestamp": 1786291200
       }
     ]
   }
