@@ -1,12 +1,12 @@
 {
   "sourceUrl": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
   "sourceName": "好游快爆远行商人工具",
-  "fetchedAt": "2026-08-12T06:46:46.818541+00:00",
+  "fetchedAt": "2026-08-12T08:05:26.531789+00:00",
   "timezone": "Asia/Shanghai",
   "status": "open",
-  "round": 2,
-  "roundLabel": "12:00-16:00",
-  "nextRefreshBeijing": "2026-08-12 16:00:00",
+  "round": 3,
+  "roundLabel": "16:00-20:00",
+  "nextRefreshBeijing": "2026-08-12 20:00:00",
   "rounds": {
     "1": [
       {
@@ -66,7 +66,17 @@
         "timestamp": 1786521600
       }
     ],
-    "3": [],
+    "3": [
+      {
+        "name": "电系血脉秘药",
+        "price": "16w",
+        "limit": "3",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/a/a3/2n9fch8izmb6cw93rlw6ww4i7p6kotq.png/100px-Xuemai_dian.png",
+        "category": "血脉修改道具",
+        "description": "能唤醒血脉力量的远古秘药，使精灵获得电系血脉。 “一段失落的秘密将被重拾。”",
+        "timestamp": 1786536000
+      }
+    ],
     "4": []
   }
 }
