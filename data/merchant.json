@@ -1,12 +1,12 @@
 {
   "sourceUrl": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
   "sourceName": "好游快爆远行商人工具",
-  "fetchedAt": "2026-08-14T11:23:19.824980+00:00",
+  "fetchedAt": "2026-08-14T12:06:05.138794+00:00",
   "timezone": "Asia/Shanghai",
   "status": "open",
-  "round": 3,
-  "roundLabel": "16:00-20:00",
-  "nextRefreshBeijing": "2026-08-14 20:00:00",
+  "round": 4,
+  "roundLabel": "20:00-24:00",
+  "nextRefreshBeijing": "2026-08-15 08:00:00",
   "rounds": {
     "1": [
       {
@@ -104,6 +104,15 @@
         "category": "个体资质增强道具",
         "description": "对初始个体资质小于10的精灵使用，使该项个体资质的初始值增加1。",
         "timestamp": 1786896000
+      },
+      {
+        "name": "虫系血脉秘药",
+        "price": "16w",
+        "limit": "3",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/f/fa/kcywd1p2ikx394lixtb73roqc9fmx4a.png/100px-Xuemai_chong.png",
+        "category": "血脉修改道具",
+        "description": "能唤醒血脉力量的远古秘药，使精灵获得虫系血脉。 “一段失落的秘密将被重拾。”",
+        "timestamp": 1786723200
       }
     ]
   }
