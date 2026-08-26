@@ -1,12 +1,12 @@
 {
   "sourceUrl": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
   "sourceName": "好游快爆远行商人工具",
-  "fetchedAt": "2026-08-26T07:13:21.691461+00:00",
+  "fetchedAt": "2026-08-26T08:01:59.758931+00:00",
   "timezone": "Asia/Shanghai",
   "status": "open",
-  "round": 2,
-  "roundLabel": "12:00-16:00",
-  "nextRefreshBeijing": "2026-08-26 16:00:00",
+  "round": 3,
+  "roundLabel": "16:00-20:00",
+  "nextRefreshBeijing": "2026-08-26 20:00:00",
   "rounds": {
     "1": [
       {
@@ -48,7 +48,35 @@
         "timestamp": 1787731200
       }
     ],
-    "3": [],
+    "3": [
+      {
+        "name": "黑晶琉璃",
+        "price": "1000",
+        "limit": "100",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/bc/khe20j8lwkt1bg9g4b0gbnsff48g93c.png/100px-100628.png",
+        "category": "炼金材料",
+        "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 “我的阿米亚特说这玩意儿太香了，嚼起来有些呛口，像火山灰，有纯正的拉布朗矿山味道。”",
+        "timestamp": 1787745600
+      },
+      {
+        "name": "火系粉尘",
+        "price": "500",
+        "limit": "100",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/a/a6/a5v60zfm9ivyri166tias4efjnp5vyt.png/100px-100122.png",
+        "category": "炼金材料",
+        "description": "常见的炼金材料，蕴含少量火系魔法，是合成技能石的主要触媒。",
+        "timestamp": 1787745600
+      },
+      {
+        "name": "冰系粉尘",
+        "price": "500",
+        "limit": "100",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/a/a9/no0rhm0wky3e406wni3ef13z6zvfxw1.png/100px-100130.png",
+        "category": "炼金材料",
+        "description": "常见的炼金材料，蕴含少量冰系魔法，是合成技能石的主要触媒。",
+        "timestamp": 1787745600
+      }
+    ],
     "4": []
   }
 }
