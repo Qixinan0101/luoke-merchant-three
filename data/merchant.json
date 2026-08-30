@@ -1,73 +1,26 @@
 {
   "sourceUrl": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
   "sourceName": "好游快爆远行商人工具",
-  "fetchedAt": "2026-08-29T18:54:38.374471+00:00",
+  "fetchedAt": "2026-08-30T03:22:02.150240+00:00",
   "timezone": "Asia/Shanghai",
-  "status": "closed",
-  "round": null,
-  "roundLabel": "休市中",
-  "nextRefreshBeijing": "2026-08-31 08:00:00",
+  "status": "open",
+  "round": 1,
+  "roundLabel": "08:00-12:00",
+  "nextRefreshBeijing": "2026-08-30 12:00:00",
   "rounds": {
     "1": [
       {
-        "name": "国王球",
+        "name": "幽系血脉秘药",
         "price": "16w",
         "limit": "3",
-        "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/2e/jygbfxpdbup5weqy4zaqnyaw2fcfyrq.png/100px-100255.png",
-        "category": "咕噜球",
-        "description": "昂贵且好用的咕噜球，能十分轻易地捕捉精灵，并能提升精灵的天分。 曾经专供贵族使用，制作方法不明。",
-        "timestamp": 1787976000
-      },
-      {
-        "name": "首领血脉秘药",
-        "price": "32w",
-        "limit": "1",
-        "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/26/fbfwlhncfo0pstpv3ibxn1mj3ayg6di.png/100px-Xuemai_shoulingxuemai.png",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/3/31/79r65pjlgs4boduwx17vu94sqn0i2t6.png/100px-Xuemai_youling.png",
         "category": "血脉修改道具",
-        "description": "修改血脉的秘药，使特定精灵获得“首领血脉”。",
-        "timestamp": 1787976000
+        "description": "能唤醒血脉力量的远古秘药，使精灵获得幽系血脉。 “一段失落的秘密将被重拾。”",
+        "timestamp": 1788062400
       }
     ],
-    "2": [
-      {
-        "name": "紫莲刚玉",
-        "price": "1000",
-        "limit": "100",
-        "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/9c/s7ej54xr4magmv0h0zag15jah6avwlc.png/100px-100682.png",
-        "category": "炼金材料",
-        "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 紫雀花王朝的贵族相信这是复活与不朽的象征，常常将紫莲刚玉制作成护身符随身携带。",
-        "timestamp": 1787990400
-      },
-      {
-        "name": "奇异血脉秘药",
-        "price": "16w",
-        "limit": "3",
-        "image": "https://patchwiki.biligame.com/images/rocom/thumb/a/ab/eg7zj03u487p1l3f91z499w1nxdzac1.png/100px-Xuemai_qiyixuemai.png",
-        "category": "血脉修改道具",
-        "description": "修改血脉的秘药，使精灵获得“奇异血脉”。",
-        "timestamp": 1787990400
-      },
-      {
-        "name": "武系粉尘",
-        "price": "500",
-        "limit": "100",
-        "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/23/su3uy9wfjwvx3ifjaia3l88j2kjr5mg.png/100px-100135.png",
-        "category": "炼金材料",
-        "description": "常见的炼金材料，蕴含少量武系魔法，是合成技能石的主要触媒。",
-        "timestamp": 1787990400
-      }
-    ],
-    "3": [
-      {
-        "name": "蓝晶碧玺",
-        "price": "1000",
-        "limit": "100",
-        "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c5/k8wzdzechd88qs9bxuvcnyg0pv4tzl4.png/100px-100681.png",
-        "category": "炼金材料",
-        "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 某些晶石蜗会产出珍贵的粉蓝色碧玺，为此商人翻着花样研究晶石蜗的食谱喜好。",
-        "timestamp": 1788004800
-      }
-    ],
+    "2": [],
+    "3": [],
     "4": [
       {
         "name": "残缺魔镜",
@@ -103,16 +56,7 @@
         "image": "https://patchwiki.biligame.com/images/rocom/thumb/8/81/7pzswfbn9l7hip6ptdg7f2mo341ztui.png/100px-Img_shaliqiu.png",
         "category": "特制咕噜球",
         "description": "更适合用来捕捉地系、虫系的精灵。 沉重的球，没法扔太远。",
-        "timestamp": 1788019200
-      },
-      {
-        "name": "神奇的蛋",
-        "price": "36000",
-        "limit": "5",
-        "image": "https://img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
-        "category": "精灵蛋",
-        "description": "蕴含着难以捉摸的魔力，不知道可以孵化出哪种精灵。",
-        "timestamp": 1788019200
+        "timestamp": 1788105600
       }
     ]
   }
