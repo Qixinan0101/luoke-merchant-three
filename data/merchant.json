@@ -1,91 +1,71 @@
 {
   "sourceUrl": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
   "sourceName": "好游快爆远行商人工具",
-  "fetchedAt": "2026-09-03T19:23:26.174113+00:00",
+  "fetchedAt": "2026-09-04T02:42:06.963532+00:00",
   "timezone": "Asia/Shanghai",
-  "status": "closed",
-  "round": null,
-  "roundLabel": "休市中",
-  "nextRefreshBeijing": "2026-09-05 08:00:00",
+  "status": "open",
+  "round": 1,
+  "roundLabel": "08:00-12:00",
+  "nextRefreshBeijing": "2026-09-04 12:00:00",
   "rounds": {
     "1": [
       {
-        "name": "蓝晶碧玺",
-        "price": "1000",
-        "limit": "100",
-        "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c5/k8wzdzechd88qs9bxuvcnyg0pv4tzl4.png/100px-100681.png",
-        "category": "炼金材料",
-        "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 某些晶石蜗会产出珍贵的粉蓝色碧玺，为此商人翻着花样研究晶石蜗的食谱喜好。",
-        "timestamp": 1788408000
-      },
-      {
         "name": "魔力果",
         "price": "6000",
         "limit": "20",
         "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
         "category": "精灵喂养材料",
         "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
-        "timestamp": 1788408000
-      },
-      {
-        "name": "神奇的蛋",
-        "price": "36000",
-        "limit": "5",
-        "image": "https://img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
-        "category": "精灵蛋",
-        "description": "蕴含着难以捉摸的魔力，不知道可以孵化出哪种精灵。",
-        "timestamp": 1788408000
+        "timestamp": 1788494400
       }
     ],
-    "2": [
-      {
-        "name": "翼系粉尘",
-        "price": "500",
-        "limit": "100",
-        "image": "https://patchwiki.biligame.com/images/rocom/thumb/3/35/5mp1ohcm72pgsxax5kq3x1aophw3lh0.png/100px-100136.png",
-        "category": "炼金材料",
-        "description": "常见的炼金材料，蕴含少量翼系魔法，是合成技能石的主要触媒。",
-        "timestamp": 1788422400
-      }
-    ],
-    "3": [
-      {
-        "name": "蓝晶碧玺",
-        "price": "1000",
-        "limit": "100",
-        "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c5/k8wzdzechd88qs9bxuvcnyg0pv4tzl4.png/100px-100681.png",
-        "category": "炼金材料",
-        "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 某些晶石蜗会产出珍贵的粉蓝色碧玺，为此商人翻着花样研究晶石蜗的食谱喜好。",
-        "timestamp": 1788436800
-      },
-      {
-        "name": "魔力果",
-        "price": "6000",
-        "limit": "20",
-        "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
-        "category": "精灵喂养材料",
-        "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
-        "timestamp": 1788436800
-      },
-      {
-        "name": "神奇的蛋",
-        "price": "36000",
-        "limit": "5",
-        "image": "https://img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
-        "category": "精灵蛋",
-        "description": "蕴含着难以捉摸的魔力，不知道可以孵化出哪种精灵。",
-        "timestamp": 1788436800
-      }
-    ],
+    "2": [],
+    "3": [],
     "4": [
       {
-        "name": "黄石榴石",
-        "price": "1000",
+        "name": "好战球",
+        "price": "3000",
         "limit": "100",
-        "image": "https://patchwiki.biligame.com/images/rocom/thumb/f/f3/c5x5f0lgk33ly801m8w1n9aod8ny4sh.png/100px-100683.png",
-        "category": "炼金材料",
-        "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 特殊的晶体排列解构，精灵打喷嚏可能会令这种晶体发生爆炸。",
-        "timestamp": 1788451200
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/7/79/kdfs6bmfy54gk7ak70arjxug91zv1z5.png/100px-Img_lumangqiu.png",
+        "category": "特制咕噜球",
+        "description": "更适合用来捕捉武系、龙系的精灵。 好斗的球，攻击中的精灵会被吸引。",
+        "timestamp": 1788537600
+      },
+      {
+        "name": "网兜球",
+        "price": "3000",
+        "limit": "100",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/4/4b/60uvwzet0brdqlhtoa89domccpbo4hr.png/100px-Img_wangdiuqiu.png",
+        "category": "特制咕噜球",
+        "description": "更适合用来捕捉水系、翼系精灵。 轻快的球，能直线飞跃很远的距离。",
+        "timestamp": 1788537600
+      },
+      {
+        "name": "残缺魔镜",
+        "price": "48w",
+        "limit": "1",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/1/10/nssw03fprximwkgzjqdaq8r8pq3q3le.png/100px-100716.png",
+        "category": "性格影响修改道具",
+        "description": "可以修正性格带来的负面影响。 “我不知道，我将消除自己。”",
+        "timestamp": 1788710400
+      },
+      {
+        "name": "适格钥匙",
+        "price": "32w",
+        "limit": "1",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/1/11/6l0tqz9gytrn8r10gk5bgcj4rxnfx57.png/100px-100714.png",
+        "category": "个体资质属性修改道具",
+        "description": "可以修改精灵的个体资质种类，或激活一条初始值为8的新资质。",
+        "timestamp": 1788710400
+      },
+      {
+        "name": "能力钥匙",
+        "price": "16w",
+        "limit": "6",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/2d/749ek9zbh79fvll7f5vtpxa33dz3mze.png/100px-100009.png",
+        "category": "个体资质增强道具",
+        "description": "对初始个体资质小于10的精灵使用，使该项个体资质的初始值增加1。",
+        "timestamp": 1788710400
       }
     ]
   }
