@@ -1,12 +1,12 @@
 {
   "sourceUrl": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
   "sourceName": "好游快爆远行商人工具",
-  "fetchedAt": "2026-09-04T02:42:06.963532+00:00",
+  "fetchedAt": "2026-09-04T07:25:25.723341+00:00",
   "timezone": "Asia/Shanghai",
   "status": "open",
-  "round": 1,
-  "roundLabel": "08:00-12:00",
-  "nextRefreshBeijing": "2026-09-04 12:00:00",
+  "round": 2,
+  "roundLabel": "12:00-16:00",
+  "nextRefreshBeijing": "2026-09-04 16:00:00",
   "rounds": {
     "1": [
       {
@@ -19,7 +19,35 @@
         "timestamp": 1788494400
       }
     ],
-    "2": [],
+    "2": [
+      {
+        "name": "蓝晶碧玺",
+        "price": "1000",
+        "limit": "100",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c5/k8wzdzechd88qs9bxuvcnyg0pv4tzl4.png/100px-100681.png",
+        "category": "炼金材料",
+        "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 某些晶石蜗会产出珍贵的粉蓝色碧玺，为此商人翻着花样研究晶石蜗的食谱喜好。",
+        "timestamp": 1788508800
+      },
+      {
+        "name": "萌系血脉秘药",
+        "price": "16w",
+        "limit": "3",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/a/a9/f93cxq6r5qxkkt6cs8hc2jaecsj3yy9.png/100px-Xuemai_meng.png",
+        "category": "血脉修改道具",
+        "description": "能唤醒血脉力量的远古秘药，使精灵获得萌系血脉。 “一段失落的秘密将被重拾。”",
+        "timestamp": 1788508800
+      },
+      {
+        "name": "水系粉尘",
+        "price": "500",
+        "limit": "100",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c7/4fxef31uslze9psd9375td9zbqtbllv.png/100px-100123.png",
+        "category": "炼金材料",
+        "description": "常见的炼金材料，蕴含少量水系魔法，是合成技能石的主要触媒。",
+        "timestamp": 1788508800
+      }
+    ],
     "3": [],
     "4": [
       {
