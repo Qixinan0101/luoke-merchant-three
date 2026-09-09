@@ -1,12 +1,12 @@
 {
   "sourceUrl": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
   "sourceName": "好游快爆远行商人工具",
-  "fetchedAt": "2026-09-09T07:49:17.132617+00:00",
+  "fetchedAt": "2026-09-09T12:29:40.566436+00:00",
   "timezone": "Asia/Shanghai",
   "status": "open",
-  "round": 2,
-  "roundLabel": "12:00-16:00",
-  "nextRefreshBeijing": "2026-09-09 16:00:00",
+  "round": 4,
+  "roundLabel": "20:00-24:00",
+  "nextRefreshBeijing": "2026-09-10 08:00:00",
   "rounds": {
     "1": [
       {
@@ -57,7 +57,45 @@
         "timestamp": 1788940800
       }
     ],
-    "3": [],
-    "4": []
+    "3": [
+      {
+        "name": "神奇的蛋",
+        "price": "36000",
+        "limit": "5",
+        "image": "https://img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
+        "category": "精灵蛋",
+        "description": "蕴含着难以捉摸的魔力，不知道可以孵化出哪种精灵。",
+        "timestamp": 1788955200
+      },
+      {
+        "name": "翼系粉尘",
+        "price": "500",
+        "limit": "100",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/3/35/5mp1ohcm72pgsxax5kq3x1aophw3lh0.png/100px-100136.png",
+        "category": "炼金材料",
+        "description": "常见的炼金材料，蕴含少量翼系魔法，是合成技能石的主要触媒。",
+        "timestamp": 1788955200
+      }
+    ],
+    "4": [
+      {
+        "name": "国王球",
+        "price": "16w",
+        "limit": "3",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/2e/jygbfxpdbup5weqy4zaqnyaw2fcfyrq.png/100px-100255.png",
+        "category": "咕噜球",
+        "description": "昂贵且好用的咕噜球，能十分轻易地捕捉精灵，并能提升精灵的天分。 曾经专供贵族使用，制作方法不明。",
+        "timestamp": 1788969600
+      },
+      {
+        "name": "草系粉尘",
+        "price": "500",
+        "limit": "100",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/3/32/2k88qbruf464xxyf02grnmkvun59h0c.png/100px-100121.png",
+        "category": "炼金材料",
+        "description": "常见的炼金材料，蕴含少量草系魔法，是合成技能石的主要触媒。",
+        "timestamp": 1788969600
+      }
+    ]
   }
 }
