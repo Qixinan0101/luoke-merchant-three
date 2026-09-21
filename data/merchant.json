@@ -1,12 +1,12 @@
 {
   "sourceUrl": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
   "sourceName": "好游快爆远行商人工具",
-  "fetchedAt": "2026-09-21T03:05:43.902455+00:00",
+  "fetchedAt": "2026-09-21T08:50:28.280048+00:00",
   "timezone": "Asia/Shanghai",
   "status": "open",
-  "round": 1,
-  "roundLabel": "08:00-12:00",
-  "nextRefreshBeijing": "2026-09-21 12:00:00",
+  "round": 3,
+  "roundLabel": "16:00-20:00",
+  "nextRefreshBeijing": "2026-09-21 20:00:00",
   "rounds": {
     "1": [
       {
@@ -37,8 +37,37 @@
         "timestamp": 1789963200
       }
     ],
-    "2": [],
-    "3": [],
+    "2": [
+      {
+        "name": "幽系血脉秘药",
+        "price": "16w",
+        "limit": "3",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/3/31/79r65pjlgs4boduwx17vu94sqn0i2t6.png/100px-Xuemai_youling.png",
+        "category": "血脉修改道具",
+        "description": "能唤醒血脉力量的远古秘药，使精灵获得幽系血脉。 “一段失落的秘密将被重拾。”",
+        "timestamp": 1789977600
+      },
+      {
+        "name": "龙系粉尘",
+        "price": "500",
+        "limit": "100",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/a/ac/jhbsu0fzhq55ivqu89qz81366owvkki.png/100px-100131.png",
+        "category": "炼金材料",
+        "description": "常见的炼金材料，蕴含少量龙系魔法，是合成技能石的主要触媒。",
+        "timestamp": 1789977600
+      }
+    ],
+    "3": [
+      {
+        "name": "黑晶琉璃",
+        "price": "1000",
+        "limit": "100",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/bc/khe20j8lwkt1bg9g4b0gbnsff48g93c.png/100px-100628.png",
+        "category": "炼金材料",
+        "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 “我的阿米亚特说这玩意儿太香了，嚼起来有些呛口，像火山灰，有纯正的拉布朗矿山味道。”",
+        "timestamp": 1789992000
+      }
+    ],
     "4": []
   }
 }
