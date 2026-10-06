@@ -1,40 +1,40 @@
 {
   "sourceUrl": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
   "sourceName": "好游快爆远行商人工具",
-  "fetchedAt": "2026-10-05T19:28:56.154887+00:00",
+  "fetchedAt": "2026-10-06T04:37:55.116883+00:00",
   "timezone": "Asia/Shanghai",
-  "status": "closed",
-  "round": null,
-  "roundLabel": "休市中",
-  "nextRefreshBeijing": "2026-10-07 08:00:00",
+  "status": "open",
+  "round": 2,
+  "roundLabel": "12:00-16:00",
+  "nextRefreshBeijing": "2026-10-06 16:00:00",
   "rounds": {
     "1": [
       {
-        "name": "国王球",
+        "name": "草系血脉秘药",
         "price": "16w",
         "limit": "3",
-        "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/2e/jygbfxpdbup5weqy4zaqnyaw2fcfyrq.png/100px-100255.png",
-        "category": "咕噜球",
-        "description": "昂贵且好用的咕噜球，能十分轻易地捕捉精灵，并能提升精灵的天分。 曾经专供贵族使用，制作方法不明。",
-        "timestamp": 1791172800
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/e/e3/q44lm9csnpdmdswihzewb1gj6yln2v6.png/100px-Xuemai_cao.png",
+        "category": "血脉修改道具",
+        "description": "能唤醒血脉力量的远古秘药，使精灵获得草系血脉。 “一段失落的秘密将被重拾。”",
+        "timestamp": 1791259200
       },
       {
-        "name": "蓝晶碧玺",
-        "price": "1000",
+        "name": "电系粉尘",
+        "price": "500",
         "limit": "100",
-        "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c5/k8wzdzechd88qs9bxuvcnyg0pv4tzl4.png/100px-100681.png",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/2f/2sux0g15uo8at77bwpoxrg32rv3l4dz.png/100px-100132.png",
         "category": "炼金材料",
-        "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 某些晶石蜗会产出珍贵的粉蓝色碧玺，为此商人翻着花样研究晶石蜗的食谱喜好。",
-        "timestamp": 1791172800
+        "description": "常见的炼金材料，蕴含少量电系魔法，是合成技能石的主要触媒。",
+        "timestamp": 1791259200
       },
       {
-        "name": "魔力果",
-        "price": "6000",
-        "limit": "20",
-        "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
-        "category": "精灵喂养材料",
-        "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
-        "timestamp": 1791172800
+        "name": "机械粉尘",
+        "price": "500",
+        "limit": "100",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/1/1c/lcsenwszmlkz002ai6du9f32tbfpi19.png/100px-100138.png",
+        "category": "炼金材料",
+        "description": "常见的炼金材料，蕴含少量机械系魔法，是合成技能石的主要触媒。",
+        "timestamp": 1791259200
       }
     ],
     "2": [
@@ -45,38 +45,16 @@
         "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c5/k8wzdzechd88qs9bxuvcnyg0pv4tzl4.png/100px-100681.png",
         "category": "炼金材料",
         "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 某些晶石蜗会产出珍贵的粉蓝色碧玺，为此商人翻着花样研究晶石蜗的食谱喜好。",
-        "timestamp": 1791187200
-      }
-    ],
-    "3": [
-      {
-        "name": "神奇的蛋",
-        "price": "36000",
-        "limit": "5",
-        "image": "https://img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
-        "category": "精灵蛋",
-        "description": "蕴含着难以捉摸的魔力，不知道可以孵化出哪种精灵。",
-        "timestamp": 1791201600
-      }
-    ],
-    "4": [
-      {
-        "name": "美妙球",
-        "price": "3000",
-        "limit": "200",
-        "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/b0/6ywvdkywqprqvws7m4ogeldp9y19swt.png/100px-Img_haihaiqiu.png",
-        "category": "特制咕噜球",
-        "description": "更适合用来捕捉萌系、普通系的精灵。 活泼的球，开心的精灵会被吸引。",
-        "timestamp": 1791216000
+        "timestamp": 1791273600
       },
       {
-        "name": "首领血脉秘药",
-        "price": "32w",
-        "limit": "1",
-        "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/26/fbfwlhncfo0pstpv3ibxn1mj3ayg6di.png/100px-Xuemai_shoulingxuemai.png",
+        "name": "普通血脉秘药",
+        "price": "16w",
+        "limit": "3",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/a/a8/lx9q220586a1qpy109sy34ghfgtrs6w.png/100px-Xuemai_putong.png",
         "category": "血脉修改道具",
-        "description": "修改血脉的秘药，使特定精灵获得“首领血脉”。",
-        "timestamp": 1791216000
+        "description": "能唤醒血脉力量的远古秘药，使精灵获得普通系血脉。 “一段失落的秘密将被重拾。”",
+        "timestamp": 1791273600
       },
       {
         "name": "魔力果",
@@ -85,16 +63,19 @@
         "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
         "category": "精灵喂养材料",
         "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
-        "timestamp": 1791216000
-      },
+        "timestamp": 1791273600
+      }
+    ],
+    "3": [],
+    "4": [
       {
-        "name": "神奇的蛋",
-        "price": "36000",
-        "limit": "5",
-        "image": "https://img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
-        "category": "精灵蛋",
-        "description": "蕴含着难以捉摸的魔力，不知道可以孵化出哪种精灵。",
-        "timestamp": 1791216000
+        "name": "美妙球",
+        "price": "3000",
+        "limit": "200",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/b0/6ywvdkywqprqvws7m4ogeldp9y19swt.png/100px-Img_haihaiqiu.png",
+        "category": "特制咕噜球",
+        "description": "更适合用来捕捉萌系、普通系的精灵。 活泼的球，开心的精灵会被吸引。",
+        "timestamp": 1791302400
       }
     ]
   }
