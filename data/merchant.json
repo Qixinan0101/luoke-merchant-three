@@ -1,12 +1,12 @@
 {
   "sourceUrl": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
   "sourceName": "好游快爆远行商人工具",
-  "fetchedAt": "2026-11-06T04:54:10.460803+00:00",
+  "fetchedAt": "2026-11-06T12:41:07.319198+00:00",
   "timezone": "Asia/Shanghai",
   "status": "open",
-  "round": 2,
-  "roundLabel": "12:00-16:00",
-  "nextRefreshBeijing": "2026-11-06 16:00:00",
+  "round": 4,
+  "roundLabel": "20:00-24:00",
+  "nextRefreshBeijing": "2026-11-07 08:00:00",
   "rounds": {
     "1": [
       {
@@ -48,7 +48,26 @@
         "timestamp": 1793952000
       }
     ],
-    "3": [],
+    "3": [
+      {
+        "name": "奇异血脉秘药",
+        "price": "16w",
+        "limit": "3",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/a/ab/eg7zj03u487p1l3f91z499w1nxdzac1.png/100px-Xuemai_qiyixuemai.png",
+        "category": "血脉修改道具",
+        "description": "修改血脉的秘药，使精灵获得“奇异血脉”。",
+        "timestamp": 1793966400
+      },
+      {
+        "name": "幻系血脉秘药",
+        "price": "16w",
+        "limit": "3",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/f/f5/osnobm6foxcvyf5t5304fz3ozr2w8cp.png/100px-Xuemai_huan.png",
+        "category": "血脉修改道具",
+        "description": "能唤醒血脉力量的远古秘药，使精灵获得幻系血脉。 “一段失落的秘密将被重拾。”",
+        "timestamp": 1793966400
+      }
+    ],
     "4": [
       {
         "name": "网兜球",
@@ -57,6 +76,33 @@
         "image": "https://patchwiki.biligame.com/images/rocom/thumb/4/4b/60uvwzet0brdqlhtoa89domccpbo4hr.png/100px-Img_wangdiuqiu.png",
         "category": "特制咕噜球",
         "description": "更适合用来捕捉水系、翼系精灵。 轻快的球，能直线飞跃很远的距离。",
+        "timestamp": 1793980800
+      },
+      {
+        "name": "黑晶琉璃",
+        "price": "1000",
+        "limit": "100",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/bc/khe20j8lwkt1bg9g4b0gbnsff48g93c.png/100px-100628.png",
+        "category": "炼金材料",
+        "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 “我的阿米亚特说这玩意儿太香了，嚼起来有些呛口，像火山灰，有纯正的拉布朗矿山味道。”",
+        "timestamp": 1793980800
+      },
+      {
+        "name": "黄石榴石",
+        "price": "1000",
+        "limit": "100",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/f/f3/c5x5f0lgk33ly801m8w1n9aod8ny4sh.png/100px-100683.png",
+        "category": "炼金材料",
+        "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 特殊的晶体排列解构，精灵打喷嚏可能会令这种晶体发生爆炸。",
+        "timestamp": 1793980800
+      },
+      {
+        "name": "草系粉尘",
+        "price": "500",
+        "limit": "100",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/3/32/2k88qbruf464xxyf02grnmkvun59h0c.png/100px-100121.png",
+        "category": "炼金材料",
+        "description": "常见的炼金材料，蕴含少量草系魔法，是合成技能石的主要触媒。",
         "timestamp": 1793980800
       }
     ]
