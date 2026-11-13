@@ -1,83 +1,14 @@
 {
   "sourceUrl": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
   "sourceName": "好游快爆远行商人工具",
-  "fetchedAt": "2026-11-12T21:20:35.141760+00:00",
+  "fetchedAt": "2026-11-13T04:51:59.348665+00:00",
   "timezone": "Asia/Shanghai",
-  "status": "closed",
-  "round": null,
-  "roundLabel": "休市中",
-  "nextRefreshBeijing": "2026-11-14 08:00:00",
+  "status": "open",
+  "round": 2,
+  "roundLabel": "12:00-16:00",
+  "nextRefreshBeijing": "2026-11-13 16:00:00",
   "rounds": {
     "1": [
-      {
-        "name": "黑晶琉璃",
-        "price": "1000",
-        "limit": "100",
-        "image": "https://patchwiki.biligame.com/images/rocom/thumb/b/bc/khe20j8lwkt1bg9g4b0gbnsff48g93c.png/100px-100628.png",
-        "category": "炼金材料",
-        "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 “我的阿米亚特说这玩意儿太香了，嚼起来有些呛口，像火山灰，有纯正的拉布朗矿山味道。”",
-        "timestamp": 1794456000
-      },
-      {
-        "name": "神奇的蛋",
-        "price": "36000",
-        "limit": "5",
-        "image": "https://img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
-        "category": "精灵蛋",
-        "description": "蕴含着难以捉摸的魔力，不知道可以孵化出哪种精灵。",
-        "timestamp": 1794456000
-      },
-      {
-        "name": "普通粉尘",
-        "price": "500",
-        "limit": "100",
-        "image": "https://patchwiki.biligame.com/images/rocom/thumb/f/f6/ls7hsygs9epizddf1xo4q9b2iu1dduu.png/100px-100127.png",
-        "category": "炼金材料",
-        "description": "常见的炼金材料，蕴含少量普通系魔法，是合成技能石的主要触媒。",
-        "timestamp": 1794456000
-      }
-    ],
-    "2": [
-      {
-        "name": "魔力果",
-        "price": "6000",
-        "limit": "20",
-        "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
-        "category": "精灵喂养材料",
-        "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
-        "timestamp": 1794470400
-      },
-      {
-        "name": "草系粉尘",
-        "price": "500",
-        "limit": "100",
-        "image": "https://patchwiki.biligame.com/images/rocom/thumb/3/32/2k88qbruf464xxyf02grnmkvun59h0c.png/100px-100121.png",
-        "category": "炼金材料",
-        "description": "常见的炼金材料，蕴含少量草系魔法，是合成技能石的主要触媒。",
-        "timestamp": 1794470400
-      }
-    ],
-    "3": [
-      {
-        "name": "蓝晶碧玺",
-        "price": "1000",
-        "limit": "100",
-        "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c5/k8wzdzechd88qs9bxuvcnyg0pv4tzl4.png/100px-100681.png",
-        "category": "炼金材料",
-        "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 某些晶石蜗会产出珍贵的粉蓝色碧玺，为此商人翻着花样研究晶石蜗的食谱喜好。",
-        "timestamp": 1794484800
-      },
-      {
-        "name": "魔力果",
-        "price": "6000",
-        "limit": "20",
-        "image": "https://patchwiki.biligame.com/images/rocom/thumb/c/c6/5qe6rcdtfxe1gsrvgj3lrn033athx9p.png/100px-100668.png",
-        "category": "精灵喂养材料",
-        "description": "不太常见的果实，精灵食用后获得能力提升。 “精灵食物营养科的研究总是不见进展，这么多年了精灵还在吃果子。”",
-        "timestamp": 1794484800
-      }
-    ],
-    "4": [
       {
         "name": "黄石榴石",
         "price": "1000",
@@ -85,8 +16,10 @@
         "image": "https://patchwiki.biligame.com/images/rocom/thumb/f/f3/c5x5f0lgk33ly801m8w1n9aod8ny4sh.png/100px-100683.png",
         "category": "炼金材料",
         "description": "比较常用的炼金材料，可以用来合成咕噜球和技能石。 特殊的晶体排列解构，精灵打喷嚏可能会令这种晶体发生爆炸。",
-        "timestamp": 1794499200
-      },
+        "timestamp": 1794542400
+      }
+    ],
+    "2": [
       {
         "name": "神奇的蛋",
         "price": "36000",
@@ -94,16 +27,19 @@
         "image": "https://img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
         "category": "精灵蛋",
         "description": "蕴含着难以捉摸的魔力，不知道可以孵化出哪种精灵。",
-        "timestamp": 1794499200
-      },
+        "timestamp": 1794556800
+      }
+    ],
+    "3": [],
+    "4": [
       {
-        "name": "武系粉尘",
-        "price": "500",
-        "limit": "100",
-        "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/23/su3uy9wfjwvx3ifjaia3l88j2kjr5mg.png/100px-100135.png",
-        "category": "炼金材料",
-        "description": "常见的炼金材料，蕴含少量武系魔法，是合成技能石的主要触媒。",
-        "timestamp": 1794499200
+        "name": "变幻球",
+        "price": "3000",
+        "limit": "200",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/9/97/t58zrpfzxopvj3ke3oi3v57mf6k05s0.png/100px-Img_miwuqiu.png",
+        "category": "特制咕噜球",
+        "description": "更适合用来捕捉幻系、机械系的精灵。 难以揣测的球。",
+        "timestamp": 1794585600
       }
     ]
   }
