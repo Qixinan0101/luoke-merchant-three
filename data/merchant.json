@@ -1,12 +1,12 @@
 {
   "sourceUrl": "https://www.onebiji.com/hykb_tools/comm/lkwgmerchant/preview.php?id=1&immgj=0",
   "sourceName": "好游快爆远行商人工具",
-  "fetchedAt": "2026-11-14T04:45:11.199069+00:00",
+  "fetchedAt": "2026-11-14T11:46:55.086923+00:00",
   "timezone": "Asia/Shanghai",
   "status": "open",
-  "round": 2,
-  "roundLabel": "12:00-16:00",
-  "nextRefreshBeijing": "2026-11-14 16:00:00",
+  "round": 3,
+  "roundLabel": "16:00-20:00",
+  "nextRefreshBeijing": "2026-11-14 20:00:00",
   "rounds": {
     "1": [
       {
@@ -66,7 +66,35 @@
         "timestamp": 1794643200
       }
     ],
-    "3": [],
+    "3": [
+      {
+        "name": "炫彩蛋",
+        "price": "160w",
+        "limit": "1",
+        "image": "https://img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_d3f07a7c316e2b71dc3e5fc1871bd6da.png",
+        "category": "精灵蛋",
+        "description": "蕴含着难以捉摸的魔力，必定孵化出“炫彩”外观、“了不起”天分的精灵。",
+        "timestamp": 1794657600
+      },
+      {
+        "name": "神奇的蛋",
+        "price": "36000",
+        "limit": "5",
+        "image": "https://img.71acg.net/whd~hykb/comm/hd_admin_upload_2982_5390e1a946446e64d929ad89a3ad3eed.png",
+        "category": "精灵蛋",
+        "description": "蕴含着难以捉摸的魔力，不知道可以孵化出哪种精灵。",
+        "timestamp": 1794657600
+      },
+      {
+        "name": "幽系粉尘",
+        "price": "500",
+        "limit": "100",
+        "image": "https://patchwiki.biligame.com/images/rocom/thumb/2/20/okbnyp4feg52iaxuijvjzv6wodaqjmi.png/100px-100126.png",
+        "category": "炼金材料",
+        "description": "常见的炼金材料，蕴含少量幽系魔法，是合成技能石的主要触媒。",
+        "timestamp": 1794657600
+      }
+    ],
     "4": [
       {
         "name": "变幻球",
